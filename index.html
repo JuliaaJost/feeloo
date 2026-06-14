@@ -1,10 +1,75 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+
+    <!-- Sorgt dafür, dass die App am Handy richtig skaliert wird -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Feeloo</title>
+
+    <!-- Verbindung zu unserer CSS-Datei -->
+    <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
 
+<!-- Gesamter sichtbarer App-Bereich -->
+<main class="app">
+
+    <!-- Kopfbereich der App -->
+    <header class="app-header">
+        <p class="greeting">Hallo Lisa</p>
+        <h1>Wie fühlst du dich heute?</h1>
+        <p class="subtitle">Wähle den Mood, der gerade am besten passt.</p>
+    </header>
+
+    <!-- Großer ausgewählter Mood -->
+    <section class="selected-mood-section">
+        <img id="selectedMoodImage" src="images/Hervorragend.jpg" alt="Hervorragend" class="selected-mood-image">
+
+        <h2 id="selectedMoodName">Hervorragend</h2>
+        <p id="selectedMoodText">Schön, dass es dir heute so gut geht.</p>
+    </section>
+
+    <!-- Auswahl der Moodballs -->
+    <section class="mood-selection">
+
+        <button class="mood-button" data-mood="Wütend" data-color="angry">
+            <img src="images/Wütend.jpg" alt="Wütend">
+            <span>Wütend</span>
+        </button>
+
+        <button class="mood-button" data-mood="Traurig" data-color="sad">
+            <img src="images/Traurig.jpg" alt="Traurig">
+            <span>Traurig</span>
+        </button>
+
+        <button class="mood-button" data-mood="Müde" data-color="tired">
+            <img src="images/Müde.jpg" alt="Müde">
+            <span>Müde</span>
+        </button>
+
+        <button class="mood-button" data-mood="Neutral" data-color="neutral">
+            <img src="images/Neutral.jpg" alt="Neutral">
+            <span>Neutral</span>
+        </button>
+
+        <button class="mood-button" data-mood="Gut" data-color="good">
+            <img src="images/Gut.jpg" alt="Gut">
+            <span>Gut</span>
+        </button>
+
+        <button class="mood-button active" data-mood="Hervorragend" data-color="great">
+            <img src="images/Hervorragend.jpg" alt="Hervorragend">
+            <span>Hervorragend</span>
+        </button>
+
+    </section>
+
+</main>
+
+<!-- Verbindung zu unserer JavaScript-Datei -->
+<script src="js/app.js"></script>
 </body>
 </html>

@@ -1,0 +1,127 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Gesamte Seite */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f7f8fa;
+    color: #333;
+    min-height: 100vh;
+}
+
+/* Hauptcontainer */
+.app {
+    max-width: 500px;
+    margin: auto;
+    padding: 20px;
+}
+
+
+/* ....Header..... */
+.app-header {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.greeting {
+    font-size: 18px;
+    color: #6c7a89;
+    margin-bottom: 10px;
+}
+
+h1 {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    color: #777;
+}
+
+
+/* ....Aktueller Mood.... */
+.selected-mood-section {
+    margin-top: 40px;
+    text-align: center;
+}
+
+.selected-mood-image {
+    width: 180px;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+#selectedMoodName {
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
+
+#selectedMoodText {
+    color: #666;
+}
+
+
+/* ....Mood Auswahl.... */
+.mood-selection {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 40px;
+}
+
+.mood-button {
+    background: white;
+    border: none;
+    border-radius: 20px;
+    padding: 10px;
+    cursor: pointer;
+    width: 100px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.mood-button img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+}
+
+.mood-button span {
+    display: block;
+    margin-top: 8px;
+}
+
+/* Aktiver Mood */
+.mood-button.active {
+    border: 3px solid #89d17e;
+}
+
+/* Hintergrundfarben je nach ausgewähltem Mood */
+body.mood-angry {
+    background-color: #ffe1e1;
+}
+
+body.mood-sad {
+    background-color: #dfefff;
+}
+
+body.mood-tired {
+    background-color: #eee4ff;
+}
+
+body.mood-neutral {
+    background-color: #f0f0f0;
+}
+
+body.mood-good {
+    background-color: #fff4c7;
+}
+
+body.mood-great {
+    background-color: #e1f7df;
+}
+
