@@ -13,7 +13,8 @@ const moodTexts = {
     "Müde": "Vielleicht brauchst du heute etwas mehr Ruhe.",
     "Neutral": "Ein ruhiger Tag ist auch vollkommen okay.",
     "Gut": "Schön, dass es dir heute gut geht.",
-    "Hervorragend": "Schön, dass es dir heute so gut geht."
+    "Hervorragend": "Schön, dass es dir heute so gut geht.",
+    "Ängstlich": "Du musst heute nicht alles kontrollieren. Ein Schritt nach dem anderen.",
 };
 
 // Diese Funktion wird ausgeführt, wenn ein Mood angeklickt wird

@@ -125,6 +125,10 @@ body.mood-great {
     background-color: #e1f7df;
 }
 
+body.mood-anxious {
+    background-color: #e8ddff;
+}
+
 /* ....Zusatzinformationen.... */
 
 .details-section {
