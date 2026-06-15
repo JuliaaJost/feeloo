@@ -172,3 +172,36 @@ body.mood-anxious {
     font-size: 16px;
     cursor: pointer;
 }
+
+/* ....Navigation.... */
+.bottom-navigation {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 500px;
+    display: flex;
+    justify-content: space-around;
+    background-color: white;
+    padding: 12px;
+    border-radius: 25px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+}
+
+.nav-button {
+    border: none;
+    background: transparent;
+    font-size: 14px;
+    cursor: pointer;
+    color: #777;
+}
+
+.nav-button.active {
+    color: #4caf50;
+    font-weight: bold;
+}
+
+.app {
+    padding-bottom: 100px;
+}
