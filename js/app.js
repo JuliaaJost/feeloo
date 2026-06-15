@@ -8,9 +8,9 @@ const selectedMoodText = document.querySelector("#selectedMoodText");
 
 // Texte passend zu jedem Mood
 const moodTexts = {
-    "Wütend": "Es ist okay, wütend zu sein. Atme kurz durch.",
+    "Wuetend": "Es ist okay, wütend zu sein. Atme kurz durch.",
     "Traurig": "Traurige Tage gehören dazu. Sei lieb zu dir.",
-    "Müde": "Vielleicht brauchst du heute etwas mehr Ruhe.",
+    "Muede": "Vielleicht brauchst du heute etwas mehr Ruhe.",
     "Neutral": "Ein ruhiger Tag ist auch vollkommen okay.",
     "Gut": "Schön, dass es dir heute gut geht.",
     "Hervorragend": "Schön, dass es dir heute so gut geht."
