@@ -103,7 +103,48 @@ saveButton.addEventListener("click", function () {
 
     // Alle Einträge wieder speichern
     localStorage.setItem("feelooEntries", JSON.stringify(entries));
+    showCalendarEntries();
 
     // Rückmeldung anzeigen
     alert("Dein Mood wurde gespeichert 🌿");
 });
+
+// Kalender-Container aus dem HTML holen
+const calendarEntries = document.querySelector("#calendarEntries");
+
+// Diese Funktion zeigt alle gespeicherten Mood-Einträge an
+function showCalendarEntries() {
+
+    // Einträge aus dem LocalStorage holen
+    const entries = JSON.parse(localStorage.getItem("feelooEntries")) || [];
+
+    // Wenn keine Einträge vorhanden sind
+    if (entries.length === 0) {
+        calendarEntries.innerHTML = "<p>Noch keine Einträge vorhanden.</p>";
+        return;
+    }
+
+    // Kalender zuerst leeren
+    calendarEntries.innerHTML = "";
+
+    // Jeden Eintrag als Karte anzeigen
+    entries.forEach(function (entry) {
+
+        const entryCard = document.createElement("div");
+        entryCard.classList.add("calendar-entry");
+
+        entryCard.innerHTML = `
+            <h3>${entry.date}</h3>
+            <p><strong>Mood:</strong> ${entry.mood}</p>
+            <p><strong>Energie:</strong> ${entry.energy}/10</p>
+            <p><strong>Stress:</strong> ${entry.stress}/10</p>
+            <p><strong>Schlaf:</strong> ${entry.sleep}/10</p>
+            <p><strong>Notiz:</strong> ${entry.note || "Keine Notiz"}</p>
+        `;
+
+        calendarEntries.appendChild(entryCard);
+    });
+}
+
+// Beim Laden der App direkt Kalender aktualisieren
+showCalendarEntries();
