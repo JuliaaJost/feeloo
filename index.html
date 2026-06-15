@@ -15,7 +15,7 @@
 <body>
 
 <!-- Gesamter sichtbarer App-Bereich -->
-<main class="app">
+<main id="todayPage" class="app page">
 
     <!-- Kopfbereich der App -->
     <header class="app-header">
@@ -148,6 +148,27 @@
     <button class="nav-button" data-page="tips">Tipps</button>
     <button class="nav-button" data-page="stats">Statistik</button>
 </nav>
+
+<!-- Tipps Bereich -->
+<section id="tipsPage" class="page hidden">
+
+    <h2>Tipps</h2>
+    <div id="tipsContent">
+        <p>Hier werden später passende Tipps angezeigt.</p>
+    </div>
+
+</section>
+
+<!-- Statistik Bereich -->
+
+<section id="statsPage" class="page hidden">
+
+    <h2>Statistik</h2>
+    <div id="statsContent">
+        <p>Hier werden später Statistiken angezeigt.</p>
+    </div>
+
+</section>
 
 <!-- Verbindung zu unserer JavaScript-Datei -->
 <script src="js/app.js"></script>
