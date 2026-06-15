@@ -67,6 +67,61 @@
 
     </section>
 
+    <!-- Zusatzinformationen -->
+
+    <section class="details-section">
+
+        <h3>Erzähle uns mehr über deinen Tag</h3>
+
+        <!-- Energielevel -->
+
+        <label for="energy">Energielevel</label>
+
+        <input
+                type="range"
+                id="energy"
+                min="1"
+                max="10"
+                value="5">
+
+        <!-- Stresslevel -->
+
+        <label for="stress">Stresslevel</label>
+
+        <input
+                type="range"
+                id="stress"
+                min="1"
+                max="10"
+                value="5">
+
+        <!-- Schlafqualität -->
+
+        <label for="sleep">Schlafqualität</label>
+
+        <input
+                type="range"
+                id="sleep"
+                min="1"
+                max="10"
+                value="5">
+
+        <!-- Persönliche Notiz -->
+
+        <label for="note">Notiz</label>
+
+        <textarea
+                id="note"
+                placeholder="Wie war dein Tag?"></textarea>
+
+        <!-- Speichern -->
+
+        <button id="saveButton">
+            Mood speichern
+        </button>
+
+    </section>
+
 </main>
 
 <!-- Verbindung zu unserer JavaScript-Datei -->
