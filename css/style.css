@@ -205,3 +205,29 @@ body.mood-anxious {
 .app {
     padding-bottom: 100px;
 }
+
+/* -------------------------
+   Seiten
+------------------------- */
+
+.page {
+    margin-top: 30px;
+}
+
+.hidden {
+    display: none;
+}
+
+/* ....Kalender.... */
+
+#calendarEntries {
+    margin-top: 20px;
+}
+
+.calendar-entry {
+    background: white;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 15px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}

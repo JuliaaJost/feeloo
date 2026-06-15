@@ -103,7 +103,73 @@ saveButton.addEventListener("click", function () {
 
     // Alle Einträge wieder speichern
     localStorage.setItem("feelooEntries", JSON.stringify(entries));
+    showCalendarEntries();
 
     // Rückmeldung anzeigen
     alert("Dein Mood wurde gespeichert 🌿");
+});
+
+// Kalender-Container aus dem HTML holen
+const calendarEntries = document.querySelector("#calendarEntries");
+
+// Diese Funktion zeigt alle gespeicherten Mood-Einträge an
+function showCalendarEntries() {
+
+    // Einträge aus dem LocalStorage holen
+    const entries = JSON.parse(localStorage.getItem("feelooEntries")) || [];
+
+    // Wenn keine Einträge vorhanden sind
+    if (entries.length === 0) {
+        calendarEntries.innerHTML = "<p>Noch keine Einträge vorhanden.</p>";
+        return;
+    }
+
+    // Kalender zuerst leeren
+    calendarEntries.innerHTML = "";
+
+    // Jeden Eintrag als Karte anzeigen
+    entries.forEach(function (entry) {
+        const entryCard = document.createElement("div");
+        entryCard.classList.add("calendar-entry");
+
+        entryCard.innerHTML = `
+            <h3>${entry.date}</h3>
+            <p><strong>Mood:</strong> ${entry.mood}</p>
+            <p><strong>Energie:</strong> ${entry.energy}/10</p>
+            <p><strong>Stress:</strong> ${entry.stress}/10</p>
+            <p><strong>Schlaf:</strong> ${entry.sleep}/10</p>
+            <p><strong>Notiz:</strong> ${entry.note || "Keine Notiz"}</p>
+        `;
+
+        calendarEntries.appendChild(entryCard);
+    });
+}
+
+// Beim Laden der App direkt Kalender aktualisieren
+showCalendarEntries();
+
+// Alle Navigationsbuttons holen
+const navButtons = document.querySelectorAll(".nav-button");
+
+// Alle Seiten holen
+const pages = document.querySelectorAll(".page");
+
+// Diese Funktion zeigt eine Seite und versteckt die anderen
+function showPage(pageName) {
+
+    pages.forEach(function (page) {
+        page.classList.add("hidden");
+    });
+    document.querySelector("#" + pageName + "Page").classList.remove("hidden");
+    navButtons.forEach(function (button) {
+        button.classList.remove("active");
+    });
+    document.querySelector('[data-page="' + pageName + '"]').classList.add("active");
+}
+
+// Klickfunktion für jeden Navigationsbutton
+navButtons.forEach(function (button) {
+    button.addEventListener("click", function () {
+        showPage(button.dataset.page);
+    });
 });
