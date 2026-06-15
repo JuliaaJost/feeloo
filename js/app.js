@@ -8,9 +8,9 @@ const selectedMoodText = document.querySelector("#selectedMoodText");
 
 // Texte passend zu jedem Mood
 const moodTexts = {
-    "Wuetend": "Es ist okay, wütend zu sein. Atme kurz durch.",
+    "Wütend": "Es ist okay, wütend zu sein. Atme kurz durch.",
     "Traurig": "Traurige Tage gehören dazu. Sei lieb zu dir.",
-    "Muede": "Vielleicht brauchst du heute etwas mehr Ruhe.",
+    "Müde": "Vielleicht brauchst du heute etwas mehr Ruhe.",
     "Neutral": "Ein ruhiger Tag ist auch vollkommen okay.",
     "Gut": "Schön, dass es dir heute gut geht.",
     "Hervorragend": "Schön, dass es dir heute so gut geht.",
@@ -29,7 +29,7 @@ function selectMood(button) {
     selectedMoodText.textContent = moodTexts[mood];
 
     // Großes Bild ändern
-    selectedMoodImage.src = "images/" + mood + ".jpg";
+    selectedMoodImage.src = "images/" + mood + ".png";
     selectedMoodImage.alt = mood;
 
     // Alte aktive Markierung entfernen
@@ -106,7 +106,7 @@ saveButton.addEventListener("click", function () {
     showCalendarEntries();
 
     // Rückmeldung anzeigen
-    alert("Dein Mood wurde gespeichert 🌿");
+    alert("Dein Mood wurde gespeichert");
 });
 
 // Kalender-Container aus dem HTML holen

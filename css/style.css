@@ -52,6 +52,7 @@ h1 {
     width: 180px;
     height: 180px;
     object-fit: cover;
+    object-position: center;
     border-radius: 50%;
 }
 
@@ -88,6 +89,8 @@ h1 {
     width: 60px;
     height: 60px;
     border-radius: 50%;
+    object-fit: cover;
+    object-position: center;
 }
 
 .mood-button span {
@@ -118,11 +121,11 @@ body.mood-neutral {
 }
 
 body.mood-good {
-    background-color: #fff4c7;
+    background-color: #e1f7df;
 }
 
 body.mood-great {
-    background-color: #e1f7df;
+    background-color: #fff4c7;
 }
 
 body.mood-anxious {
