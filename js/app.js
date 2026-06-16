@@ -119,6 +119,7 @@ saveButton.addEventListener("click", function () {
     // Alle Einträge wieder speichern
     localStorage.setItem("feelooEntries", JSON.stringify(entries));
     showCalendarEntries();
+    showStats();
 
     // Rückmeldung anzeigen
     alert("Dein Mood wurde gespeichert");
@@ -215,3 +216,65 @@ function showMoodTipCards() {
 }
 
 showMoodTipCards();
+
+// Statistik-Bereich aus dem HTML holen
+const statsContent = document.querySelector("#statsContent");
+
+// Diese Funktion berechnet einfache Werte aus allen gespeicherten Einträgen
+function showStats() {
+
+    const entries = JSON.parse(localStorage.getItem("feelooEntries")) || [];
+
+    if (entries.length === 0) {
+        statsContent.innerHTML = "<p>Noch keine Statistik vorhanden.</p>";
+        return;
+    }
+
+    const totalEntries = entries.length;
+
+    const averageEnergy = (
+        entries.reduce(function (sum, entry) {
+            return sum + Number(entry.energy);
+        }, 0) / totalEntries
+    ).toFixed(1);
+
+    const averageStress = (
+        entries.reduce(function (sum, entry) {
+            return sum + Number(entry.stress);
+        }, 0) / totalEntries
+    ).toFixed(1);
+
+    const moodCount = {};
+
+    entries.forEach(function (entry) {
+        moodCount[entry.mood] = (moodCount[entry.mood] || 0) + 1;
+    });
+
+    const mostUsedMood = Object.keys(moodCount).sort(function (a, b) {
+        return moodCount[b] - moodCount[a];
+    })[0];
+
+    statsContent.innerHTML = `
+        <div class="stat-card">
+            <strong>${totalEntries}</strong>
+            <p>Getrackte Tage</p>
+        </div>
+
+        <div class="stat-card">
+            <strong>${mostUsedMood}</strong>
+            <p>Häufigster Mood</p>
+        </div>
+
+        <div class="stat-card">
+            <strong>${averageEnergy}/10</strong>
+            <p>Ø Energielevel</p>
+        </div>
+
+        <div class="stat-card">
+            <strong>${averageStress}/10</strong>
+            <p>Ø Stresslevel</p>
+        </div>
+    `;
+}
+
+showStats();
