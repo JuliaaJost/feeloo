@@ -234,3 +234,58 @@ body.mood-anxious {
     border-radius: 15px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
+
+.tip-card {
+    background: white;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    margin-top: 20px;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.page-title {
+    text-align: center;
+    font-size: 32px;
+    margin-top: 30px;
+}
+
+.page-text {
+    text-align: center;
+    color: #666;
+    margin-bottom: 25px;
+}
+
+.mood-tips-list {
+    max-width: 500px;
+    margin: 20px auto 100px auto;
+}
+
+.mood-tip-item {
+    background: white;
+    border-radius: 18px;
+    padding: 12px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.mood-tip-item img {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.mood-tip-item h4 {
+    margin-bottom: 4px;
+}
+
+.mood-tip-item p {
+    font-size: 14px;
+    color: #666;
+}

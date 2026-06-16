@@ -1,3 +1,6 @@
+// Hier holen wir das HTML-Element, in dem später der Tipp angezeigt wird.
+const currentTip = document.querySelector("#currentTip");
+
 // Hier holen wir alle Mood-Buttons aus dem HTML
 const moodButtons = document.querySelectorAll(".mood-button");
 
@@ -17,6 +20,17 @@ const moodTexts = {
     "Ängstlich": "Du musst heute nicht alles kontrollieren. Ein Schritt nach dem anderen.",
 };
 
+// Tipps passend zu jedem Mood
+const moodTips = {
+    "Wütend": "Atme 5-mal tief durch und mache einen kurzen Spaziergang.",
+    "Traurig": "Ruf eine Person an, die dir wichtig ist.",
+    "Ängstlich": "Konzentriere dich auf Dinge, die du gerade kontrollieren kannst.",
+    "Müde": "Gönn dir eine Pause und trinke ausreichend Wasser.",
+    "Neutral": "Nutze den Tag für etwas, das dir Freude macht.",
+    "Gut": "Halte fest, was heute besonders gut gelaufen ist.",
+    "Hervorragend": "Genieße den Moment und teile deine gute Stimmung."
+};
+
 // Diese Funktion wird ausgeführt, wenn ein Mood angeklickt wird
 function selectMood(button) {
     const mood = button.dataset.mood;
@@ -25,8 +39,9 @@ function selectMood(button) {
     // Großen Mood-Namen ändern
     selectedMoodName.textContent = mood;
 
-    // Erklärungstext ändern
+    // Erklärungstext und Tipptext ändern
     selectedMoodText.textContent = moodTexts[mood];
+    currentTip.textContent = moodTips[mood];
 
     // Großes Bild ändern
     selectedMoodImage.src = "images/" + mood + ".png";
@@ -173,3 +188,30 @@ navButtons.forEach(function (button) {
         showPage(button.dataset.page);
     });
 });
+
+// Liste für alle Mood-Tipp-Karten holen
+const moodTipsList = document.querySelector("#moodTipsList");
+
+// Diese Funktion baut die Übersicht auf der Tipps-Seite
+function showMoodTipCards() {
+
+    moodTipsList.innerHTML = "";
+
+    Object.keys(moodTips).forEach(function (mood) {
+
+        const card = document.createElement("div");
+        card.classList.add("mood-tip-item");
+
+        card.innerHTML = `
+            <img src="images/${mood}.png" alt="${mood}">
+            <div>
+                <h4>Wenn du ${mood.toLowerCase()} bist</h4>
+                <p>${moodTips[mood]}</p>
+            </div>
+        `;
+
+        moodTipsList.appendChild(card);
+    });
+}
+
+showMoodTipCards();
