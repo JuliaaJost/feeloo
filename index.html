@@ -85,7 +85,6 @@
         <!-- Energielevel -->
 
         <label for="energy">Energielevel</label>
-
         <input
                 type="range"
                 id="energy"
@@ -94,9 +93,7 @@
                 value="5">
 
         <!-- Stresslevel -->
-
         <label for="stress">Stresslevel</label>
-
         <input
                 type="range"
                 id="stress"
@@ -105,9 +102,7 @@
                 value="5">
 
         <!-- Schlafqualität -->
-
         <label for="sleep">Schlafqualität</label>
-
         <input
                 type="range"
                 id="sleep"
@@ -116,15 +111,12 @@
                 value="5">
 
         <!-- Persönliche Notiz -->
-
         <label for="note">Notiz</label>
-
         <textarea
                 id="note"
                 placeholder="Wie war dein Tag?"></textarea>
 
         <!-- Speichern -->
-
         <button id="saveButton">
             Mood speichern
         </button>
@@ -134,12 +126,17 @@
 </main>
 
 <!-- Kalender Bereich -->
-<section id="calendarPage" class="page hidden">
-    <h2>Kalender</h2>
+<section id="calendarPage" class="app page hidden">
 
-    <div id="calendarEntries">
+    <h2 class="page-title">Kalender</h2>
+    <p class="page-text">
+        Deine gespeicherten Mood-Einträge.
+    </p>
+
+    <div id="calendarEntries" class="calendar-list">
         <p>Noch keine Einträge vorhanden.</p>
     </div>
+
 </section>
 
 <!-- Navigations Bereich -->
@@ -151,7 +148,7 @@
 </nav>
 
 <!-- Tipps Bereich -->
-<section id="tipsPage" class="page hidden">
+<section id="tipsPage" class="app page hidden">
     <h2 class="page-title">Infos & Tipps</h2>
     <p class="page-text">
         Kleine Impulse, die zu deiner Stimmung passen.
@@ -164,7 +161,7 @@
 </section>
 
 <!-- Statistik Bereich -->
-<section id="statsPage" class="page hidden">
+<section id="statsPage" class="app page hidden">
     <h2 class="page-title">Statistik</h2>
     <p class="page-text">
         Dein Überblick über deine gespeicherten Mood-Einträge.
