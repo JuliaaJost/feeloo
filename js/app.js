@@ -337,5 +337,4 @@ function showDemoCalendar() {
 
 showDemoCalendar();
 
-console.log("Kalender Test läuft");
-console.log(document.querySelector("#calendarGrid"));
+alert("app.js wurde geladen");
