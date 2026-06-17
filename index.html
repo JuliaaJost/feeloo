@@ -129,13 +129,13 @@
 <section id="calendarPage" class="app page hidden">
 
     <h2 class="page-title">Kalender</h2>
-    <p class="page-text">
-        Deine gespeicherten Mood-Einträge.
-    </p>
 
-    <div id="calendarEntries" class="calendar-list">
-        <p>Noch keine Einträge vorhanden.</p>
+    <div class="calendar-card">
+        <h3>Mai 2026</h3>
+        <div id="calendarGrid" class="calendar-grid"></div>
     </div>
+
+    <div id="calendarEntries" class="calendar-list"></div>
 
 </section>
 
@@ -168,6 +168,8 @@
     </p>
     <div id="statsContent" class="stats-grid"></div>
 </section>
+
+<script src="js/demoData.js"></script>
 
 <!-- Verbindung zu unserer JavaScript-Datei -->
 <script src="js/app.js"></script>

@@ -295,3 +295,47 @@ if ("serviceWorker" in navigator) {
             console.log(error);
         });
 }
+
+/*
+    Kalender-Raster für Mai 2026 anzeigen.
+    Die Demo-Daten aus demoData.js werden als farbige Tage angezeigt.
+*/
+
+const calendarGrid = document.querySelector("#calendarGrid");
+
+const moodColors = {
+    "Wütend": "#ffb3b3",
+    "Traurig": "#b3dfff",
+    "Ängstlich": "#d8c4ff",
+    "Müde": "#c4c9ff",
+    "Neutral": "#eeeeee",
+    "Gut": "#fff0a8",
+    "Hervorragend": "#bfe8b8"
+};
+
+function showDemoCalendar() {
+    calendarGrid.innerHTML = "";
+
+    for (let day = 1; day <= 31; day++) {
+        const date = "2026-05-" + String(day).padStart(2, "0");
+
+        const entry = demoEntries.find(function (item) {
+            return item.date === date;
+        });
+
+        const dayElement = document.createElement("div");
+        dayElement.classList.add("calendar-day");
+        dayElement.textContent = day;
+
+        if (entry) {
+            dayElement.style.backgroundColor = moodColors[entry.mood];
+        }
+
+        calendarGrid.appendChild(dayElement);
+    }
+}
+
+showDemoCalendar();
+
+console.log("Kalender Test läuft");
+console.log(document.querySelector("#calendarGrid"));
