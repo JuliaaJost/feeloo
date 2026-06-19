@@ -153,11 +153,19 @@
     <p class="page-text">
         Kleine Impulse, die zu deiner Stimmung passen.
     </p>
-    <div class="tip-card highlight-tip">
-        <h3>Tipp des Tages</h3>
-        <p id="currentTip">Wähle einen Mood aus.</p>
-    </div>
     <div id="moodTipsList" class="mood-tips-list"></div>
+
+    <!-- Tipp Detailseite -->
+    <section id="tipDetail" class="tip-detail hidden">
+        <button id="backToTips" class="back-button">
+            ← Zurück
+        </button>
+
+        <img id="tipDetailImage" class="tip-detail-image" src="" alt="">
+        <h2 id="tipDetailTitle"></h2>
+        <p id="tipDetailText"></p>
+        <div id="tipDetailActions"></div>
+    </section>
 </section>
 
 <!-- Statistik Bereich -->

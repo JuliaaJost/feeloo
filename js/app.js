@@ -31,6 +31,67 @@ const moodTips = {
     "Hervorragend": "Genieße den Moment und teile deine gute Stimmung."
 };
 
+//Jeder Stimmung wird eine eigene Hintergrundfarbe zugeordnet.
+const moodColors = {
+    "Wütend": "#ffe1e1",
+    "Traurig": "#dfefff",
+    "Ängstlich": "#e8ddff",
+    "Müde": "#eee4ff",
+    "Neutral": "#f0f0f0",
+    "Hervorragend": "#fff4c7",
+    "Gut": "#e1f7df"
+};
+
+// MoodCards sind dünkler
+const moodCardColors = {
+    "Wütend": "#ffd6d6",
+    "Traurig": "#cfe8ff",
+    "Ängstlich": "#dccbff",
+    "Müde": "#d3d8ff",
+    "Neutral": "#e2e2e2",
+    "Hervorragend": "#ffe899",
+    "Gut": "#cfeec8"
+};
+
+// Detailseite der Moods mit konkreten Tipps
+const moodTipDetails = {
+    "Wütend": [
+        "Nimm dir kurz Abstand von der Situation.",
+        "Atme langsam ein und aus.",
+        "Schreib auf, was dich gerade stört."
+    ],
+    "Traurig": [
+        "Erlaube dir, traurig zu sein.",
+        "Sprich mit einer vertrauten Person.",
+        "Mach etwas Kleines, das dir gut tut."
+    ],
+    "Ängstlich": [
+        "Konzentriere dich auf deinen Atem.",
+        "Schreibe drei Dinge auf, die gerade sicher sind.",
+        "Mach einen kleinen Schritt nach dem anderen."
+    ],
+    "Müde": [
+        "Plane eine kurze Pause.",
+        "Trinke ein Glas Wasser.",
+        "Reduziere deine To-do-Liste."
+    ],
+    "Neutral": [
+        "Nimm kurz wahr, wie dein Tag läuft.",
+        "Mach etwas Ruhiges für dich.",
+        "Setze dir ein kleines Ziel."
+    ],
+    "Gut": [
+        "Halte fest, was heute gut war.",
+        "Teile deine gute Stimmung.",
+        "Mach bewusst weiter mit dem, was dir gut tut."
+    ],
+    "Hervorragend": [
+        "Genieße den Moment bewusst.",
+        "Nutze deine Energie für etwas Schönes.",
+        "Speichere dir diesen positiven Moment ab."
+    ]
+};
+
 // Diese Funktion wird ausgeführt, wenn ein Mood angeklickt wird
 function selectMood(button) {
     const mood = button.dataset.mood;
@@ -41,7 +102,8 @@ function selectMood(button) {
 
     // Erklärungstext und Tipptext ändern
     selectedMoodText.textContent = moodTexts[mood];
-    currentTip.textContent = moodTips[mood];
+    currentMood = mood;
+    showMoodTipCards();
 
     // Großes Bild ändern
     selectedMoodImage.src = "images/" + mood + ".png";
@@ -198,18 +260,41 @@ function showMoodTipCards() {
 
     moodTipsList.innerHTML = "";
 
-    Object.keys(moodTips).forEach(function (mood) {
+    // Der aktuell ausgewählte Mood soll oben stehen.
+    const sortedMoods = Object.keys(moodTips).sort(function (a, b) {
+        if (a === currentMood) return -1;
+        if (b === currentMood) return 1;
+        return 0;
+    });
+
+    sortedMoods.forEach(function (mood) {
 
         const card = document.createElement("div");
         card.classList.add("mood-tip-item");
+        const title = mood === currentMood
+            ? "Tipp des Tages"
+            : "Wenn du " + mood.toLowerCase() + " bist";
+        if (mood === currentMood) {
+            card.classList.add("focused-tip");
+            card.style.backgroundColor = moodCardColors[mood];
+        }
 
         card.innerHTML = `
             <img src="images/${mood}.png" alt="${mood}">
             <div>
-                <h4>Wenn du ${mood.toLowerCase()} bist</h4>
+                <h4>${title}</h4>
+                ${
+                     mood === currentMood
+                    ? `<p class="current-mood-label">${mood}</p>`
+                    : ""
+                }
                 <p>${moodTips[mood]}</p>
             </div>
         `;
+// Öffnet die Detailseite des ausgewählten Moods.
+        card.addEventListener("click", function () {
+            showTipDetail(mood);
+        });
 
         moodTipsList.appendChild(card);
     });
@@ -303,16 +388,6 @@ if ("serviceWorker" in navigator) {
 
 const calendarGrid = document.querySelector("#calendarGrid");
 
-const moodColors = {
-    "Wütend": "#ffb3b3",
-    "Traurig": "#b3dfff",
-    "Ängstlich": "#d8c4ff",
-    "Müde": "#c4c9ff",
-    "Neutral": "#eeeeee",
-    "Gut": "#fff0a8",
-    "Hervorragend": "#bfe8b8"
-};
-
 function showDemoCalendar() {
     calendarGrid.innerHTML = "";
 
@@ -337,4 +412,38 @@ function showDemoCalendar() {
 
 showDemoCalendar();
 
-alert("app.js wurde geladen");
+//  Hier holen wir die Elemente der Tipp-Detailseite aus dem HTML.
+const tipDetail = document.querySelector("#tipDetail");
+const backToTips = document.querySelector("#backToTips");
+const tipDetailImage = document.querySelector("#tipDetailImage");
+const tipDetailTitle = document.querySelector("#tipDetailTitle");
+const tipDetailText = document.querySelector("#tipDetailText");
+const tipDetailActions = document.querySelector("#tipDetailActions");
+
+// Erstellt für jeden Mood eine Karte auf der Infos & Tipps Seite.
+function showTipDetail(mood) {
+    tipDetail.style.backgroundColor = moodColors[mood];
+    moodTipsList.classList.add("hidden");
+    tipDetail.classList.remove("hidden");
+
+    tipDetailImage.src = "images/" + mood + ".png";
+    tipDetailImage.alt = mood;
+
+    tipDetailTitle.textContent = "Wenn du " + mood.toLowerCase() + " bist";
+    tipDetailText.textContent = moodTips[mood];
+
+    tipDetailActions.innerHTML = "";
+
+    // Alle gespeicherten Empfehlungen des gewählten Moods anzeigen.
+    moodTipDetails[mood].forEach(function (action) {
+        const actionBox = document.createElement("div");
+        actionBox.classList.add("tip-action");
+        actionBox.textContent = action;
+        tipDetailActions.appendChild(actionBox);
+    });
+}
+
+backToTips.addEventListener("click", function () {
+    tipDetail.classList.add("hidden");
+    moodTipsList.classList.remove("hidden");
+});
