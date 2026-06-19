@@ -388,14 +388,53 @@ function showStats() {
             <p>Ø Stresslevel</p>
         </div>
     `;
+
+    // Bereich für die Mood-Verteilung erzeugen.
+    const distributionCard = document.createElement("div");
+
+    distributionCard.classList.add("distribution-card");
+
+    distributionCard.innerHTML = `
+        <h3>Mood-Verteilung</h3>
+    `;
+
+    statsContent.appendChild(distributionCard);
+
+    // Für jeden gespeicherten Mood einen Balken erzeugen.
+    Object.keys(moodCount).forEach(function (mood) {
+
+        const percentage = Math.round(
+            moodCount[mood] / totalEntries * 100
+        );
+
+        const row = document.createElement("div");
+
+        row.classList.add("distribution-row");
+
+        row.innerHTML = `
+        <span>${mood}</span>
+
+        <div class="distribution-bar">
+
+            <div
+                class="distribution-fill"
+                style="width: ${percentage}%">
+            </div>
+
+        </div>
+
+        <span>${percentage}%</span>
+    `;
+
+        distributionCard.appendChild(row);
+
+    });
 }
 
 showStats();
 
 
-/*
-    Service Worker registrieren
-*/
+// Service Worker registrieren
 if ("serviceWorker" in navigator) {
 
     navigator.serviceWorker.register("js/sw.js")
