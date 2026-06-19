@@ -53,6 +53,17 @@ const moodCardColors = {
     "Gut": "#cfeec8"
 };
 
+// Statistik-Card ist kräftiger
+const moodStatsColors = {
+    "Wütend": "#ffc6c6",
+    "Traurig": "#bddfff",
+    "Ängstlich": "#cfbcff",
+    "Müde": "#c0c7ff",
+    "Neutral": "#d8d8d8",
+    "Hervorragend": "#ffe27a",
+    "Gut": "#bee7b6"
+};
+
 // Detailseite der Moods mit konkreten Tipps
 const moodTipDetails = {
     "Wütend": [
@@ -338,25 +349,42 @@ function showStats() {
     const mostUsedMood = Object.keys(moodCount).sort(function (a, b) {
         return moodCount[b] - moodCount[a];
     })[0];
+    // Für die Statistik verwenden wir dieselben Mood-Bilder wie im Today-Screen.
+    const moodImage = "images/" + mostUsedMood + ".png";
+
+    // Die Statistik-Seite bekommt die Farbe des häufigsten Moods.
+    const statsPage = document.querySelector("#statsPage");
+    statsPage.style.backgroundColor = moodColors[mostUsedMood];
 
     statsContent.innerHTML = `
+        <div class="stats-summary-card" style="background-color: ${moodStatsColors[mostUsedMood]}">
+            <img class="summary-mood-image" src="${moodImage}" alt="${mostUsedMood}">
+            <div>
+                <h3>Diese Woche war überwiegend ${mostUsedMood.toLowerCase()}.</h3>
+                <p>Du hast an ${totalEntries} Tagen deinen Mood gespeichert.</p>
+            </div>
+        </div>
+    
         <div class="stat-card">
-            <strong>${totalEntries}</strong>
+            <strong>📅 ${totalEntries}</strong>
             <p>Getrackte Tage</p>
         </div>
-
-        <div class="stat-card">
-            <strong>${mostUsedMood}</strong>
+    
+        <div class="stat-card" style="background-color: ${moodStatsColors[mostUsedMood]}">
+            <strong>
+                <img class="small-stat-image" src="${moodImage}" alt="${mostUsedMood}">
+                ${mostUsedMood}
+            </strong>
             <p>Häufigster Mood</p>
         </div>
-
+    
         <div class="stat-card">
-            <strong>${averageEnergy}/10</strong>
+            <strong>⚡ ${averageEnergy}/10</strong>
             <p>Ø Energielevel</p>
         </div>
-
+    
         <div class="stat-card">
-            <strong>${averageStress}/10</strong>
+            <strong>💗 ${averageStress}/10</strong>
             <p>Ø Stresslevel</p>
         </div>
     `;
