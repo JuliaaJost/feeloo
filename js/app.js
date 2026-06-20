@@ -429,6 +429,28 @@ function showStats() {
         distributionCard.appendChild(row);
 
     });
+
+    // Wochen-Impuls passend zum häufigsten Mood.
+    const weeklyTips = {
+        "Wütend": "Diese Woche war viel Anspannung dabei. Plane bewusst kleine Pausen ein.",
+        "Traurig": "Diese Woche wirkte emotional schwer. Sei besonders freundlich zu dir.",
+        "Ängstlich": "Diese Woche war von Unsicherheit geprägt. Konzentriere dich auf kleine sichere Schritte.",
+        "Müde": "Diese Woche zeigt viel Erschöpfung. Achte auf Ruhe, Schlaf und Pausen.",
+        "Neutral": "Diese Woche war eher ruhig und stabil. Das ist auch wertvoll.",
+        "Gut": "Diese Woche war überwiegend positiv. Nimm dir kurz Zeit, das bewusst wahrzunehmen.",
+        "Hervorragend": "Diese Woche war sehr positiv. Genieße diese Energie und nimm sie mit."
+    };
+
+        const impulseCard = document.createElement("div");
+
+        impulseCard.classList.add("impulse-card");
+
+        impulseCard.innerHTML = `
+        <h3>Wochen-Impuls</h3>
+        <p>${weeklyTips[mostUsedMood]}</p>
+    `;
+
+        statsContent.appendChild(impulseCard);
 }
 
 showStats();
