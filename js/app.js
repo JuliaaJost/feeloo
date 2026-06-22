@@ -192,7 +192,9 @@ saveButton.addEventListener("click", function () {
     // Alle Einträge wieder speichern
     localStorage.setItem("feelooEntries", JSON.stringify(entries));
     showCalendarEntries();
+    showCalendarGrid();
     showStats();
+
 
     // Rückmeldung anzeigen
     alert("Dein Mood wurde gespeichert");
@@ -471,35 +473,324 @@ if ("serviceWorker" in navigator) {
 }
 
 /*
-    Kalender-Raster für Mai 2026 anzeigen.
-    Die Demo-Daten aus demoData.js werden als farbige Tage angezeigt.
-*/
+    Kalender-Raster aus echten gespeicherten Mood-Einträgen.
 
+    Die Daten kommen aus dem LocalStorage.
+    Dadurch zeigt der Kalender nicht mehr Demo-Daten,
+    sondern die Einträge, die Nutzer:innen wirklich speichern.
+*/
 const calendarGrid = document.querySelector("#calendarGrid");
 
-function showDemoCalendar() {
+// Detailbereich für einen angeklickten Kalendertag.
+const calendarDetail = document.querySelector("#calendarDetail");
+
+/*
+    Überschrift des Kalenders.
+    Diese wird automatisch auf den aktuellen Monat gesetzt.
+*/
+const calendarMonthTitle =
+    document.querySelector("#calendarMonthTitle");
+
+// Buttons zum Wechseln zwischen den Monaten.
+const prevMonthButton =
+    document.querySelector("#prevMonth");
+
+const nextMonthButton =
+    document.querySelector("#nextMonth");
+
+/*
+    Summary-Card unter dem Kalender.
+    Hier zeigen wir den heutigen oder letzten Mood an.
+*/
+const calendarSummary =
+    document.querySelector("#calendarSummary");
+
+/*
+    Kleine Karte für den neuesten gespeicherten Mood-Eintrag.
+*/
+const calendarLatestEntry =
+    document.querySelector("#calendarLatestEntry");
+
+/*
+    Dieser Wert merkt sich,
+    welcher Monat gerade angezeigt wird.
+*/
+let visibleCalendarDate = new Date();
+
+/*
+    Öffnet die Detailansicht für einen gespeicherten Kalendertag.
+    Die Ansicht ist ähnlich aufgebaut wie im Mockup:
+    Mood-Ball oben, darunter Mood-Card und Antwort-Cards.
+*/
+function showDayDetail(entry) {
+
+    document.querySelector(".calendar-card").classList.add("hidden");
+    calendarDetail.classList.remove("hidden");
+
+    calendarDetail.innerHTML = `
+        <div class="calendar-detail-window">
+
+            <button id="backToCalendar" class="calendar-back-button">
+                ←
+            </button>
+
+            <p class="calendar-detail-date">${entry.date}</p>
+
+            <img
+                class="calendar-detail-big-image"
+                src="images/${entry.mood}.png"
+                alt="${entry.mood}">
+
+            <div class="detail-mood-card">
+                <span>Dein Mood</span>
+                <strong>${entry.mood}</strong>
+            </div>
+
+            <div class="detail-question-card">
+                <span>Wie ist dein Energielevel?</span>
+                <strong>${entry.energy}/10</strong>
+            </div>
+
+            <div class="detail-question-card">
+                <span>Wie hoch ist dein Stresslevel?</span>
+                <strong>${entry.stress}/10</strong>
+            </div>
+
+            <div class="detail-question-card">
+                <span>Wie war dein Schlaf?</span>
+                <strong>${entry.sleep}/10</strong>
+            </div>
+
+            <div class="detail-question-card">
+                <span>Deine Notiz</span>
+                <p>${entry.note || "Keine Notiz"}</p>
+            </div>
+
+            <div class="detail-impulse-card">
+                <strong>Schöner Tag!</strong>
+                <p>Danke, dass du dir kurz Zeit genommen hast, deinen Tag zu reflektieren.</p>
+            </div>
+
+        </div>
+    `;
+
+    document.querySelector("#backToCalendar").addEventListener("click", function () {
+        calendarDetail.classList.add("hidden");
+        document.querySelector(".calendar-card").classList.remove("hidden");
+    });
+}
+
+/*
+    Diese Funktion baut den Kalender für den aktuellen Monat.
+
+    Jeder Tag wird als Kreis angezeigt.
+    Gespeicherte Tage werden farbig markiert.
+*/
+
+function showCalendarGrid() {
+
+    /*
+    Jahr und Monat des aktuell
+    angezeigten Kalenders holen.
+    */
+    const year =
+        visibleCalendarDate.getFullYear();
+
+    const month =
+        visibleCalendarDate.getMonth();
+
+    //Monatsname für die Überschrift erzeugen.
+    const monthName =
+        visibleCalendarDate.toLocaleDateString(
+            "de-DE",
+            {
+                month: "long",
+                year: "numeric"
+            }
+        );
+
+    calendarMonthTitle.textContent = monthName;
+
     calendarGrid.innerHTML = "";
 
-    for (let day = 1; day <= 31; day++) {
-        const date = "2026-05-" + String(day).padStart(2, "0");
+    // Alle gespeicherten Mood-Einträge laden.
+    const entries =
+        JSON.parse(localStorage.getItem("feelooEntries")) || [];
 
-        const entry = demoEntries.find(function (item) {
+    // Anzahl Tage des aktuellen Monats berechnen.
+    const daysInMonth =
+        new Date(year, month + 1, 0).getDate();
+
+    for (let day = 1; day <= daysInMonth; day++) {
+
+        // Datum im selben Format erzeugen wie im LocalStorage.
+        const date =
+            year + "-" +
+            String(month + 1).padStart(2, "0") + "-" +
+            String(day).padStart(2, "0");
+
+        const entry = entries.find(function (item) {
             return item.date === date;
         });
 
-        const dayElement = document.createElement("div");
+        const dayElement =
+            document.createElement("button");
+
         dayElement.classList.add("calendar-day");
+
         dayElement.textContent = day;
 
         if (entry) {
-            dayElement.style.backgroundColor = moodColors[entry.mood];
+
+            // Mood-Farbe setzen
+            dayElement.style.backgroundColor =
+                moodColors[entry.mood];
+
+            // Optisch hervorheben.
+            dayElement.classList.add(
+                "calendar-day-active"
+            );
+
+            // Detailansicht öffnen.
+            dayElement.addEventListener(
+                "click",
+                function () {
+                    showDayDetail(entry);
+                }
+            );
         }
 
         calendarGrid.appendChild(dayElement);
     }
+
+    // Nach dem Aufbau des Kalenders wird die Zusammenfassung aktualisiert.
+    showCalendarSummary(entries);
+
 }
 
-showDemoCalendar();
+/*
+    Zeigt unter dem Kalender eine Monatszusammenfassung
+    und zusätzlich den neuesten Mood-Eintrag.
+*/
+function showCalendarSummary(entries) {
+
+    if (entries.length === 0) {
+        calendarSummary.innerHTML = `
+            <div class="calendar-summary-card">
+                <p>Noch kein Mood gespeichert.</p>
+            </div>
+        `;
+
+        calendarLatestEntry.innerHTML = "";
+        return;
+    }
+
+    const latestEntry = entries[entries.length - 1];
+
+    calendarSummary.innerHTML = `
+        <div class="calendar-summary-card"
+             style="background-color: ${moodColors[latestEntry.mood]}">
+
+            <img
+                class="calendar-summary-image"
+                src="images/${latestEntry.mood}.png"
+                alt="${latestEntry.mood}">
+
+            <div>
+                <p class="summary-small-text">Zusammenfassung</p>
+
+                <h3>Dein häufigster Mood diesen Monat</h3>
+
+                <h2>${latestEntry.mood}</h2>
+
+                <p>
+                    Du hast diesen Monat schon
+                    ${entries.length} Tage getrackt.
+                </p>
+            </div>
+
+        </div>
+    `;
+
+    calendarLatestEntry.innerHTML = `
+        <div class="calendar-latest-card">
+
+            <div>
+                <p class="summary-small-text">
+                    ${latestEntry.date} · ${latestEntry.mood}
+                </p>
+
+                <p>
+                    Energielevel: ${latestEntry.energy}/10
+                </p>
+
+                <p>
+                    Notiz ansehen
+                </p>
+            </div>
+
+            <img
+                class="calendar-latest-image"
+                src="images/${latestEntry.mood}.png"
+                alt="${latestEntry.mood}">
+
+        </div>
+    `;
+
+    /*
+        Beide Karten öffnen beim Klick
+        die Detailansicht des neuesten Eintrags.
+    */
+    document
+        .querySelector(".calendar-summary-card")
+        .addEventListener("click", function () {
+            showDayDetail(latestEntry);
+        });
+
+    document
+        .querySelector(".calendar-latest-card")
+        .addEventListener("click", function () {
+            showDayDetail(latestEntry);
+        });
+}
+
+
+// Kalender beim Laden der App anzeigen.
+showCalendarGrid();
+
+/*
+    Einen Monat zurück wechseln.
+*/
+prevMonthButton.addEventListener(
+    "click",
+    function () {
+
+        visibleCalendarDate.setMonth(
+            visibleCalendarDate.getMonth() - 1
+        );
+
+        calendarDetail.classList.add("hidden");
+
+        showCalendarGrid();
+    }
+);
+
+/*
+    Einen Monat vor wechseln.
+*/
+nextMonthButton.addEventListener(
+    "click",
+    function () {
+
+        visibleCalendarDate.setMonth(
+            visibleCalendarDate.getMonth() + 1
+        );
+
+        calendarDetail.classList.add("hidden");
+
+        showCalendarGrid();
+    }
+);
 
 //  Hier holen wir die Elemente der Tipp-Detailseite aus dem HTML.
 const tipDetail = document.querySelector("#tipDetail");

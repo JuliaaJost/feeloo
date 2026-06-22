@@ -1,0 +1,21 @@
+[33mb66cd75[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{0}: reset: moving to origin/main
+[33m43d6d98[m HEAD@{1}: pull: Fast-forward
+[33mad4f72e[m HEAD@{2}: pull: Fast-forward
+[33me285cdd[m HEAD@{3}: commit: Wochen Impuls zur Statistik hinzugefügt
+[33m680ae9e[m HEAD@{4}: commit: Mood Verteilung zur Statistik hinzugefügt
+[33mf1fdcc8[m HEAD@{5}: commit: Statistik Design angepasst
+[33ma01e726[m HEAD@{6}: commit: Tipps Seite und Detailansicht überarbeitet
+[33m4f01469[m HEAD@{7}: pull: Fast-forward
+[33mac6b3f7[m HEAD@{8}: commit: Statistik Seite implementiert
+[33m123f8fe[m HEAD@{9}: commit: Tipps Übersicht mit Mood Karten erstellt
+[33mf465de4[m HEAD@{10}: commit: Mood Bilder Darstellung korrigiert
+[33mc435caa[m HEAD@{11}: commit (merge): Merge branch 'main' of https://github.com/JuliaaJost/feeloo
+[33mb66cd75[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{12}: commit: Lokale Änderungen an index.html sichern
+[33m56998c6[m HEAD@{13}: pull origin main: Merge made by the 'ort' strategy.
+[33mffc6db3[m HEAD@{14}: commit (merge): Merge remote changes
+[33m6e6168f[m HEAD@{15}: commit: Lokale Änderungen vor Merge sichern
+[33m5ab67e9[m HEAD@{16}: pull: Fast-forward
+[33m3d875f6[m HEAD@{17}: commit: Mood Einträge mit LocalStorage speichern
+[33maca710e[m HEAD@{18}: commit: Mood Auswahl und Hintergrundfarbe implementiert
+[33md6f71ba[m HEAD@{19}: commit: Projektstruktur erstellt
+[33ma0475e5[m HEAD@{20}: clone: from https://github.com/JuliaaJost/feeloo.git

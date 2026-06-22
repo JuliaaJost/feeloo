@@ -131,11 +131,35 @@
     <h2 class="page-title">Kalender</h2>
 
     <div class="calendar-card">
-        <h3>Mai 2026</h3>
+        <div class="calendar-header">
+            <button id="prevMonth" class="month-button">‹</button>
+            <h3 id="calendarMonthTitle">Mai 2026</h3>
+            <button id="nextMonth" class="month-button">›</button>
+        </div>
+
+        <div class="calendar-weekdays">
+            <span>Mo</span>
+            <span>Di</span>
+            <span>Mi</span>
+            <span>Do</span>
+            <span>Fr</span>
+            <span>Sa</span>
+            <span>So</span>
+        </div>
+
         <div id="calendarGrid" class="calendar-grid"></div>
     </div>
 
-    <div id="calendarEntries" class="calendar-list"></div>
+    <div id="calendarSummary" class="calendar-summary"></div>
+
+    <!-- Kleine Karte für den aktuellsten Mood-Eintrag. -->
+    <div id="calendarLatestEntry" class="calendar-latest-entry"></div>
+
+    <!-- Alte Listenansicht bleibt versteckt -->
+    <div id="calendarEntries" class="calendar-list hidden"></div>
+
+    <!-- Detailkarte für angeklickte Kalendertage -->
+    <div id="calendarDetail" class="calendar-detail hidden"></div>
 
 </section>
 
