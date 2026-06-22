@@ -525,6 +525,8 @@ let visibleCalendarDate = new Date();
 function showDayDetail(entry) {
 
     document.querySelector(".calendar-card").classList.add("hidden");
+    calendarSummary.classList.add("hidden");
+    calendarLatestEntry.classList.add("hidden");
     calendarDetail.classList.remove("hidden");
 
     calendarDetail.innerHTML = `
@@ -577,6 +579,8 @@ function showDayDetail(entry) {
     document.querySelector("#backToCalendar").addEventListener("click", function () {
         calendarDetail.classList.add("hidden");
         document.querySelector(".calendar-card").classList.remove("hidden");
+        calendarSummary.classList.remove("hidden");
+        calendarLatestEntry.classList.remove("hidden");
     });
 }
 
@@ -676,10 +680,26 @@ function showCalendarSummary(entries) {
 
     if (entries.length === 0) {
         calendarSummary.innerHTML = `
-            <div class="calendar-summary-card">
-                <p>Noch kein Mood gespeichert.</p>
-            </div>
-        `;
+    <div class="calendar-summary-card"
+         style="background-color: ${moodColors[mostUsedMoodInMonth]}">
+
+        <img
+            class="calendar-summary-image"
+            src="images/${mostUsedMoodInMonth}.png"
+            alt="${mostUsedMoodInMonth}">
+
+        <div class="calendar-summary-text">
+            <p class="summary-small-text">Zusammenfassung</p>
+
+            <h3>Dein häufigster Mood diesen Monat</h3>
+
+            <h2>${mostUsedMoodInMonth}</h2>
+
+            <p>Du hast diesen Mood an ${mostUsedMoodAmount} Tag(en) getrackt.</p>
+        </div>
+
+    </div>
+`;
 
         calendarLatestEntry.innerHTML = "";
         return;
@@ -687,30 +707,43 @@ function showCalendarSummary(entries) {
 
     const latestEntry = entries[entries.length - 1];
 
+    // Häufigsten Mood im aktuell sichtbaren Monat berechnen.
+    const monthMoodCount = {};
+
+    entries.forEach(function (entry) {
+        monthMoodCount[entry.mood] =
+            (monthMoodCount[entry.mood] || 0) + 1;
+    });
+
+    const mostUsedMoodInMonth =
+        Object.keys(monthMoodCount).sort(function (a, b) {
+            return monthMoodCount[b] - monthMoodCount[a];
+        })[0];
+
+    const mostUsedMoodAmount =
+        monthMoodCount[mostUsedMoodInMonth];
+
     calendarSummary.innerHTML = `
-        <div class="calendar-summary-card"
-             style="background-color: ${moodColors[latestEntry.mood]}">
+    <div class="calendar-summary-card"
+         style="background-color: ${moodColors[mostUsedMoodInMonth]}">
 
-            <img
-                class="calendar-summary-image"
-                src="images/${latestEntry.mood}.png"
-                alt="${latestEntry.mood}">
+        <img
+            class="calendar-summary-image"
+            src="images/${mostUsedMoodInMonth}.png"
+            alt="${mostUsedMoodInMonth}">
 
-            <div>
-                <p class="summary-small-text">Zusammenfassung</p>
+        <div class="calendar-summary-text">
+            <p class="summary-small-text">Zusammenfassung</p>
 
-                <h3>Dein häufigster Mood diesen Monat</h3>
+            <h3>Dein häufigster Mood diesen Monat</h3>
 
-                <h2>${latestEntry.mood}</h2>
+            <h2>${mostUsedMoodInMonth}</h2>
 
-                <p>
-                    Du hast diesen Monat schon
-                    ${entries.length} Tage getrackt.
-                </p>
-            </div>
-
+            <p>Du hast diesen Mood an ${mostUsedMoodAmount} Tag(en) getrackt.</p>
         </div>
-    `;
+
+    </div>
+`;
 
     calendarLatestEntry.innerHTML = `
         <div class="calendar-latest-card">
