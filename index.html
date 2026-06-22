@@ -13,6 +13,9 @@
 
     <!-- Verbindung zu unserer CSS-Datei -->
     <link rel="stylesheet" href="css/style.css">
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 
 <body>
@@ -165,10 +168,27 @@
 
 <!-- Navigations Bereich -->
 <nav class="bottom-navigation">
-    <button class="nav-button active" data-page="today">Today</button>
-    <button class="nav-button" data-page="calendar">Kalender</button>
-    <button class="nav-button" data-page="tips">Tipps</button>
-    <button class="nav-button" data-page="stats">Statistik</button>
+
+    <button class="nav-button active" data-page="today">
+        <i class="fa-regular fa-face-smile"></i>
+        <span>Today</span>
+    </button>
+
+    <button class="nav-button" data-page="calendar">
+        <i class="fa-regular fa-calendar"></i>
+        <span>Kalender</span>
+    </button>
+
+    <button class="nav-button" data-page="tips">
+        <i class="fa-regular fa-lightbulb"></i>
+        <span>Infos & Tipps</span>
+    </button>
+
+    <button class="nav-button" data-page="stats">
+        <i class="fa-solid fa-chart-simple"></i>
+        <span>Statistik</span>
+    </button>
+
 </nav>
 
 <!-- Tipps Bereich -->

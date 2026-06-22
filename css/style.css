@@ -209,6 +209,40 @@ body.mood-anxious {
     padding-bottom: 100px;
 }
 
+/*
+---------------------------------------------------
+Navigation mit Icons
+---------------------------------------------------
+*/
+
+.nav-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+
+    background: transparent;
+    border: none;
+
+    font-size: 12px;
+}
+
+.nav-button i {
+    font-size: 18px;
+}
+
+.nav-button.active i,
+.nav-button.active span {
+    color: #5db35d;
+}
+
+.nav-button.active {
+    background: #eef8ea;
+    border-radius: 16px;
+    padding: 8px 14px;
+}
+
 /* -------------------------
    Seiten
 ------------------------- */
