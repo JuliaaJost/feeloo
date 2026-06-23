@@ -965,9 +965,11 @@ async function startScanner() {
         scannerStatus.textContent = "Gesicht wird analysiert...";
 
         setTimeout(function () {
-            aiSuggestedMood = "Gut";
-            scannerStatus.textContent = "Mood erkannt: Gut";
-            acceptMoodButton.classList.remove("hidden");
+            const imageData =
+                captureCurrentFrame();
+            console.log(imageData);
+            scannerStatus.textContent =
+                "Gesicht erfolgreich erfasst";
         }, 3000);
 
     } catch (error) {
@@ -1036,3 +1038,37 @@ acceptMoodButton.addEventListener("click", function () {
         scannerVideo.srcObject = null;
     }
 });
+
+/*
+    Nimmt ein Bild aus dem aktuellen Kamerastream auf.
+
+    Das Bild wird nicht gespeichert,
+    sondern als Base64-String zurückgegeben.
+
+    Dieser String kann später
+    an die externe KI gesendet werden.
+*/
+function captureCurrentFrame() {
+
+    const canvas =
+        document.createElement("canvas");
+
+    const context =
+        canvas.getContext("2d");
+
+    canvas.width =
+        scannerVideo.videoWidth;
+
+    canvas.height =
+        scannerVideo.videoHeight;
+
+    context.drawImage(
+        scannerVideo,
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+    return canvas.toDataURL("image/jpeg");
+}
