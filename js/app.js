@@ -965,6 +965,7 @@ async function startScanner() {
         scannerStatus.textContent = "Gesicht wird analysiert...";
 
         setTimeout(function () {
+            aiSuggestedMood = "Gut";
             scannerStatus.textContent = "Mood erkannt: Gut";
             acceptMoodButton.classList.remove("hidden");
         }, 3000);
@@ -1001,4 +1002,37 @@ closeScannerButton.addEventListener("click", function () {
 
     scannerStatus.textContent = "Kamera wird gestartet...";
     acceptMoodButton.classList.add("hidden");
+});
+
+/*
+    Speichert den Mood-Vorschlag der simulierten KI.
+*/
+let aiSuggestedMood = "Gut";
+
+/*
+    Vorschlag übernehmen:
+    Wir suchen den passenden Mood-Button
+    und lösen dieselbe Funktion aus,
+    als hätte die Nutzerin selbst geklickt.
+*/
+acceptMoodButton.addEventListener("click", function () {
+
+    const suggestedButton =
+        document.querySelector(
+            `.mood-button[data-mood="${aiSuggestedMood}"]`
+        );
+
+    if (suggestedButton) {
+        selectMood(suggestedButton);
+    }
+
+    scannerModal.classList.add("hidden");
+
+    if (scannerVideo.srcObject) {
+        scannerVideo.srcObject.getTracks().forEach(function (track) {
+            track.stop();
+        });
+
+        scannerVideo.srcObject = null;
+    }
 });
