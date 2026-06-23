@@ -1072,26 +1072,51 @@ function captureCurrentFrame() {
 }
 
 /*
-    Analysiert das Kamerabild.
+    Sendet das Kamerabild an unser Backend.
 
-    Aktuell wird die KI noch simuliert.
-    Später wird hier die Anfrage an
-    Amazon Rekognition erfolgen.
+    Das Backend leitet das Bild an Amazon Rekognition weiter
+    und gibt einen Feeloo-Mood zurück.
 */
-function analyzeMoodWithAI(imageData) {
+async function analyzeMoodWithAI(imageData) {
 
-    console.log(
-        imageData.substring(0, 100)
-    );
+    try {
+        scannerStatus.textContent =
+            "KI analysiert dein Gesicht...";
 
-    //Simuliertes KI-Ergebnis.
-    const detectedMood = "Gut";
+        const response =
+            await fetch("http://localhost:3000/analyze-face", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    image: imageData
+                })
+            });
 
-    aiSuggestedMood =
-        detectedMood;
+        const result =
+            await response.json();
 
-    scannerStatus.textContent =
-        "Mood erkannt: " + detectedMood;
+        if (result.error) {
+            scannerStatus.textContent =
+                "Analyse fehlgeschlagen.";
+            return;
+        }
 
-    acceptMoodButton.classList.remove("hidden");
+        aiSuggestedMood =
+            result.mood;
+
+        scannerStatus.textContent =
+            "Mood erkannt: " + result.mood;
+
+        acceptMoodButton.classList.remove("hidden");
+
+        console.log(result);
+
+    } catch (error) {
+        scannerStatus.textContent =
+            "Backend ist nicht erreichbar.";
+
+        console.log(error);
+    }
 }
