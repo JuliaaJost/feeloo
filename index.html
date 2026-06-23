@@ -38,6 +38,17 @@
         <p id="selectedMoodText">Schön, dass es dir heute so gut geht.</p>
     </section>
 
+    <!-- KI Mood Scan -->
+    <section class="ai-scan-section">
+        <h3>KI-Mood Scan</h3>
+        <p>
+            Lass Feeloo deinen aktuellen Mood erkennen.
+        </p>
+        <button id="openScannerButton" class="scan-button">
+            Mood scannen
+        </button>
+    </section>
+
     <!-- Auswahl der Moodballs -->
     <section class="mood-selection">
 
@@ -219,6 +230,31 @@
         Dein Überblick über deine gespeicherten Mood-Einträge.
     </p>
     <div id="statsContent" class="stats-grid"></div>
+</section>
+
+<!-- KI Scanner -->
+<section id="scannerModal" class="scanner-modal hidden">
+    <div class="scanner-window">
+        <button id="closeScannerButton"
+                class="circle-back-button">
+            ‹
+        </button>
+        <h2 class="scanner-title">Gesicht wird analysiert</h2>
+        <video
+                id="scannerVideo"
+                autoplay
+                playsinline>
+        </video>
+        <div class="scanner-circle"></div>
+        <p id="scannerStatus">
+            Kamera wird gestartet...
+        </p>
+        <button
+                id="acceptMoodButton"
+                class="scan-button hidden">
+            Vorschlag übernehmen
+        </button>
+    </div>
 </section>
 
 <script src="js/demoData.js"></script>

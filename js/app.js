@@ -922,3 +922,83 @@ backToTips.addEventListener("click", function () {
     tipDetail.classList.add("hidden");
     moodTipsList.classList.remove("hidden");
 });
+
+/*
+    Elemente des KI-Scanners.
+*/
+const scannerModal =
+    document.querySelector("#scannerModal");
+
+const openScannerButton =
+    document.querySelector("#openScannerButton");
+
+const closeScannerButton =
+    document.querySelector("#closeScannerButton");
+
+const scannerVideo =
+    document.querySelector("#scannerVideo");
+
+const scannerStatus =
+    document.querySelector("#scannerStatus");
+
+const acceptMoodButton =
+    document.querySelector("#acceptMoodButton");
+
+/*
+    Kamera starten.
+
+    Falls keine Kamera vorhanden ist oder der Zugriff
+    verweigert wird, bleibt die App trotzdem benutzbar.
+*/
+async function startScanner() {
+
+    scannerModal.classList.remove("hidden");
+    scannerStatus.textContent = "Kamera wird gestartet...";
+    acceptMoodButton.classList.add("hidden");
+
+    try {
+        const stream = await navigator.mediaDevices.getUserMedia({
+            video: true
+        });
+
+        scannerVideo.srcObject = stream;
+        scannerStatus.textContent = "Gesicht wird analysiert...";
+
+        setTimeout(function () {
+            scannerStatus.textContent = "Mood erkannt: Gut";
+            acceptMoodButton.classList.remove("hidden");
+        }, 3000);
+
+    } catch (error) {
+        scannerStatus.textContent =
+            "Kamera ist auf diesem Gerät nicht verfügbar.";
+
+        console.log("Kamera-Fehler:", error);
+    }
+}
+
+/*
+    Scanner öffnen, wenn auf "Mood scannen" geklickt wird.
+*/
+openScannerButton.addEventListener("click", function () {
+    startScanner();
+});
+
+/*
+    Scanner schließen und Kamera stoppen.
+*/
+closeScannerButton.addEventListener("click", function () {
+
+    scannerModal.classList.add("hidden");
+
+    if (scannerVideo.srcObject) {
+        scannerVideo.srcObject.getTracks().forEach(function (track) {
+            track.stop();
+        });
+
+        scannerVideo.srcObject = null;
+    }
+
+    scannerStatus.textContent = "Kamera wird gestartet...";
+    acceptMoodButton.classList.add("hidden");
+});

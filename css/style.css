@@ -797,3 +797,84 @@ Navigation mit Icons
     margin: 4px 0;
     font-size: 14px;
 }
+
+/* ...KI Scanner... */
+.ai-scan-section {
+    background: white;
+    border-radius: 24px;
+    padding: 20px;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.scan-button {
+    background: #89d17e;
+    color: white;
+    border: none;
+    border-radius: 18px;
+    padding: 12px 20px;
+    cursor: pointer;
+}
+
+.scanner-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.scanner-modal.hidden {
+    display: none;
+}
+
+.scanner-window {
+    position: relative;
+    background: white;
+    width: 90%;
+    max-width: 420px;
+    min-height: 500px;
+    border-radius: 30px;
+    padding: 24px;
+    text-align: center;
+}
+
+#closeScannerButton {
+    position: absolute;
+    top: 18px;
+    left: 18px;
+    z-index: 1001;
+    width: 42px;
+    height: 42px;
+    border: none;
+    border-radius: 50%;
+    background: #eef4e8;
+    color: #2f3b2f;
+    font-size: 24px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+#scannerVideo {
+    width: 100%;
+    border-radius: 20px;
+}
+
+.scanner-circle {
+    width: 260px;
+    height: 260px;
+    border: 5px solid #89d17e;
+    border-radius: 50%;
+    margin: 20px auto 40px auto;
+    pointer-events: none;
+}
+
+.scanner-title {
+    margin-top: 10px;
+    margin-bottom: 30px;
+}
