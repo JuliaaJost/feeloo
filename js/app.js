@@ -518,6 +518,46 @@ const calendarLatestEntry =
 let visibleCalendarDate = new Date();
 
 /*
+    Kleine Reflexionstexte passend zur Stimmung.
+*/
+const moodReflections = {
+    "Wütend": {
+        title: "Nimm dir einen Moment.",
+        text: "Heute war einiges herausfordernd. Manchmal hilft es, kurz durchzuatmen und loszulassen."
+    },
+
+    "Traurig": {
+        title: "Sei freundlich zu dir.",
+        text: "Nicht jeder Tag muss perfekt sein. Es ist okay, Gefühle zuzulassen."
+    },
+
+    "Ängstlich": {
+        title: "Ein Schritt nach dem anderen.",
+        text: "Du musst nicht alles auf einmal schaffen. Kleine Schritte reichen völlig aus."
+    },
+
+    "Müde": {
+        title: "Zeit zum Auftanken.",
+        text: "Dein Körper und dein Kopf dürfen auch einmal eine Pause machen."
+    },
+
+    "Neutral": {
+        title: "Ein ruhiger Tag.",
+        text: "Auch unspektakuläre Tage gehören dazu und haben ihren Wert."
+    },
+
+    "Gut": {
+        title: "Das lief gut.",
+        text: "Versuche festzuhalten, was heute positiv war."
+    },
+
+    "Hervorragend": {
+        title: "Genieße den Moment.",
+        text: "Heute scheint ein guter Tag gewesen zu sein. Nimm dieses Gefühl bewusst wahr."
+    }
+};
+
+/*
     Öffnet die Detailansicht für einen gespeicherten Kalendertag.
     Die Ansicht ist ähnlich aufgebaut wie im Mockup:
     Mood-Ball oben, darunter Mood-Card und Antwort-Cards.
@@ -533,7 +573,7 @@ function showDayDetail(entry) {
         <div class="calendar-detail-window">
 
             <button id="backToCalendar" class="calendar-back-button">
-                ←
+                 ‹
             </button>
 
             <p class="calendar-detail-date">${entry.date}</p>
@@ -568,9 +608,9 @@ function showDayDetail(entry) {
                 <p>${entry.note || "Keine Notiz"}</p>
             </div>
 
-            <div class="detail-impulse-card">
-                <strong>Schöner Tag!</strong>
-                <p>Danke, dass du dir kurz Zeit genommen hast, deinen Tag zu reflektieren.</p>
+            <div class="detail-impulse-card" style="background-color: ${moodColors[entry.mood]}">
+                <strong>${moodReflections[entry.mood].title}</strong>
+                <p>${moodReflections[entry.mood].text}</p>
             </div>
 
         </div>
@@ -644,6 +684,23 @@ function showCalendarGrid() {
 
         dayElement.textContent = day;
 
+        /*
+            Prüft, ob dieser Kalendertag
+            dem heutigen Datum entspricht.
+
+            Falls ja, bekommt der Tag
+            einen grünen Rahmen.
+        */
+        const today = new Date();
+
+        if (
+            day === today.getDate() &&
+            month === today.getMonth() &&
+            year === today.getFullYear()
+        ) {
+            dayElement.classList.add("today");
+        }
+
         if (entry) {
 
             // Mood-Farbe setzen
@@ -680,26 +737,10 @@ function showCalendarSummary(entries) {
 
     if (entries.length === 0) {
         calendarSummary.innerHTML = `
-    <div class="calendar-summary-card"
-         style="background-color: ${moodColors[mostUsedMoodInMonth]}">
-
-        <img
-            class="calendar-summary-image"
-            src="images/${mostUsedMoodInMonth}.png"
-            alt="${mostUsedMoodInMonth}">
-
-        <div class="calendar-summary-text">
-            <p class="summary-small-text">Zusammenfassung</p>
-
-            <h3>Dein häufigster Mood diesen Monat</h3>
-
-            <h2>${mostUsedMoodInMonth}</h2>
-
-            <p>Du hast diesen Mood an ${mostUsedMoodAmount} Tag(en) getrackt.</p>
-        </div>
-
-    </div>
-`;
+            <div class="calendar-summary-card">
+                <p>Noch kein Mood gespeichert.</p>
+            </div>
+        `;
 
         calendarLatestEntry.innerHTML = "";
         return;
@@ -707,7 +748,9 @@ function showCalendarSummary(entries) {
 
     const latestEntry = entries[entries.length - 1];
 
-    // Häufigsten Mood im aktuell sichtbaren Monat berechnen.
+    /*
+        Häufigsten Mood berechnen.
+    */
     const monthMoodCount = {};
 
     entries.forEach(function (entry) {
@@ -723,27 +766,54 @@ function showCalendarSummary(entries) {
     const mostUsedMoodAmount =
         monthMoodCount[mostUsedMoodInMonth];
 
+    /*
+        Durchschnittswerte berechnen.
+    */
+    const averageEnergy = (
+        entries.reduce(function (sum, entry) {
+            return sum + Number(entry.energy);
+        }, 0) / entries.length
+    ).toFixed(1);
+
+    const averageStress = (
+        entries.reduce(function (sum, entry) {
+            return sum + Number(entry.stress);
+        }, 0) / entries.length
+    ).toFixed(1);
+
+    const averageSleep = (
+        entries.reduce(function (sum, entry) {
+            return sum + Number(entry.sleep);
+        }, 0) / entries.length
+    ).toFixed(1);
+
     calendarSummary.innerHTML = `
-    <div class="calendar-summary-card"
-         style="background-color: ${moodColors[mostUsedMoodInMonth]}">
+        <div class="calendar-summary-card"
+             style="background-color: ${moodColors[mostUsedMoodInMonth]}">
 
-        <img
-            class="calendar-summary-image"
-            src="images/${mostUsedMoodInMonth}.png"
-            alt="${mostUsedMoodInMonth}">
+            <img
+                class="calendar-summary-image"
+                src="images/${mostUsedMoodInMonth}.png"
+                alt="${mostUsedMoodInMonth}">
 
-        <div class="calendar-summary-text">
-            <p class="summary-small-text">Zusammenfassung</p>
+            <div class="calendar-summary-text">
+                <p class="summary-small-text">Zusammenfassung</p>
 
-            <h3>Dein häufigster Mood diesen Monat</h3>
+                <h3>Dein häufigster Mood diesen Monat</h3>
 
-            <h2>${mostUsedMoodInMonth}</h2>
+                <h2>${mostUsedMoodInMonth}</h2>
 
-            <p>Du hast diesen Mood an ${mostUsedMoodAmount} Tag(en) getrackt.</p>
+                <p>Du hast diesen Mood an ${mostUsedMoodAmount} Tag(en) getrackt.</p>
+
+                <div class="month-stats">
+                    <p>⚡ Ø Energie: ${averageEnergy}</p>
+                    <p>💖 Ø Stress: ${averageStress}</p>
+                    <p>😴 Ø Schlaf: ${averageSleep}</p>
+                </div>
+            </div>
+
         </div>
-
-    </div>
-`;
+    `;
 
     calendarLatestEntry.innerHTML = `
         <div class="calendar-latest-card">
@@ -753,13 +823,9 @@ function showCalendarSummary(entries) {
                     ${latestEntry.date} · ${latestEntry.mood}
                 </p>
 
-                <p>
-                    Energielevel: ${latestEntry.energy}/10
-                </p>
+                <p>Energielevel: ${latestEntry.energy}/10</p>
 
-                <p>
-                    Notiz ansehen
-                </p>
+                <p>Notiz ansehen</p>
             </div>
 
             <img
@@ -770,10 +836,6 @@ function showCalendarSummary(entries) {
         </div>
     `;
 
-    /*
-        Beide Karten öffnen beim Klick
-        die Detailansicht des neuesten Eintrags.
-    */
     document
         .querySelector(".calendar-summary-card")
         .addEventListener("click", function () {
