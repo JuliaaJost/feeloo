@@ -967,9 +967,7 @@ async function startScanner() {
         setTimeout(function () {
             const imageData =
                 captureCurrentFrame();
-            console.log(imageData);
-            scannerStatus.textContent =
-                "Gesicht erfolgreich erfasst";
+            analyzeMoodWithAI(imageData);
         }, 3000);
 
     } catch (error) {
@@ -1071,4 +1069,29 @@ function captureCurrentFrame() {
     );
 
     return canvas.toDataURL("image/jpeg");
+}
+
+/*
+    Analysiert das Kamerabild.
+
+    Aktuell wird die KI noch simuliert.
+    Später wird hier die Anfrage an
+    Amazon Rekognition erfolgen.
+*/
+function analyzeMoodWithAI(imageData) {
+
+    console.log(
+        imageData.substring(0, 100)
+    );
+
+    //Simuliertes KI-Ergebnis.
+    const detectedMood = "Gut";
+
+    aiSuggestedMood =
+        detectedMood;
+
+    scannerStatus.textContent =
+        "Mood erkannt: " + detectedMood;
+
+    acceptMoodButton.classList.remove("hidden");
 }
