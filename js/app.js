@@ -1084,7 +1084,7 @@ async function analyzeMoodWithAI(imageData) {
             "KI analysiert dein Gesicht...";
 
         const response =
-            await fetch("http://localhost:3000/analyze-face", {
+            await fetch("http://192.168.0.50:3000/analyze-face", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

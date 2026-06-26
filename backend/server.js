@@ -126,7 +126,7 @@ app.post("/analyze-face", async function (request, response) {
     }
 });
 
-app.listen(process.env.PORT, function () {
+app.listen(process.env.PORT, "0.0.0.0", function () {
     console.log(
         "Feeloo Backend läuft auf Port " + process.env.PORT
     );
