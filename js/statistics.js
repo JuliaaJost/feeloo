@@ -25,6 +25,7 @@ function showStats() {
         }, 0) / totalEntries
     ).toFixed(1);
 
+    // Zählt, wie oft jeder Mood gespeichert wurde.
     const moodCount = {};
 
     entries.forEach(function (entry) {

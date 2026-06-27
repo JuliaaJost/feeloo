@@ -8,9 +8,7 @@
 
 const CACHE_NAME = "feeloo-v1";
 
-/*
-    Dateien, die gespeichert werden sollen
-*/
+// Dateien, die für die Offline-Nutzung im Cache gespeichert werden.
 const FILES_TO_CACHE = [
     "/",
     "/index.html",
@@ -19,9 +17,7 @@ const FILES_TO_CACHE = [
     "/manifest.webmanifest"
 ];
 
-/*
-    Beim Installieren speichern wir die Dateien
-*/
+// Beim Installieren speichern wir die Dateien
 self.addEventListener("install", function (event) {
 
     event.waitUntil(
@@ -31,10 +27,7 @@ self.addEventListener("install", function (event) {
     );
 });
 
-/*
-    Wenn eine Datei angefragt wird,
-    versuchen wir zuerst den Cache.
-*/
+// Wenn eine Datei angefragt wird, versuchen wir zuerst den Cache.
 self.addEventListener("fetch", function (event) {
 
     event.respondWith(

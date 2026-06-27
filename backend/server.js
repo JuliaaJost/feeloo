@@ -45,6 +45,7 @@ app.get("/health", function (request, response) {
     });
 });
 
+// Verbindung zu Amazon AWS Rekognition herstellen.
 const rekognitionClient = new RekognitionClient({
     region: process.env.AWS_REGION
 });
@@ -61,9 +62,7 @@ function base64ToBuffer(base64Image) {
     return Buffer.from(base64Data, "base64");
 }
 
-/*
-    Ordnet Amazon-Emotionen euren Feeloo-Moods zu.
-*/
+// Ordnet Amazon-Emotionen euren Feeloo-Moods zu.
 function mapEmotionToMood(emotionType) {
 
     const moodMap = {
@@ -80,9 +79,7 @@ function mapEmotionToMood(emotionType) {
     return moodMap[emotionType] || "Neutral";
 }
 
-/*
-    API-Endpunkt für die Gesichtsanalyse.
-*/
+// API-Endpunkt für die Gesichtsanalyse.
 app.post("/analyze-face", async function (request, response) {
 
     try {
@@ -144,6 +141,7 @@ app.post("/analyze-face", async function (request, response) {
     }
 });
 
+// Startet den Backend-Server.
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, "0.0.0.0", function () {

@@ -6,13 +6,11 @@ function showMoodTipCards() {
 
     moodTipsList.innerHTML = "";
 
-    /*
-        Der Tipp des Tages orientiert sich
-        am zuletzt gespeicherten Mood.
-    */
+    // Der Tipp des Tages orientiert sich am zuletzt gespeicherten Mood.
     const savedMood =
         localStorage.getItem("currentMood") || "Neutral";
 
+    // Der zuletzt gespeicherte Mood wird an erster Stelle angezeigt.
     const sortedMoods = Object.keys(moodTips).sort(function (a, b) {
         if (a === savedMood) return -1;
         if (b === savedMood) return 1;

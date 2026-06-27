@@ -1,4 +1,3 @@
-
 /*
     Kalender-Raster aus echten gespeicherten Mood-Einträgen.
 
@@ -32,9 +31,7 @@ const nextMonthButton =
 const calendarSummary =
     document.querySelector("#calendarSummary");
 
-/*
-    Kleine Karte für den neuesten gespeicherten Mood-Eintrag.
-*/
+// Kleine Karte für den neuesten gespeicherten Mood-Eintrag.
 const calendarLatestEntry =
     document.querySelector("#calendarLatestEntry");
 
@@ -44,9 +41,7 @@ const calendarLatestEntry =
 */
 let visibleCalendarDate = new Date();
 
-/*
-    Kleine Reflexionstexte passend zur Stimmung.
-*/
+// Kleine Reflexionstexte passend zur Stimmung.
 const moodReflections = {
     "Wütend": {
         title: "Nimm dir einen Moment.",
@@ -275,9 +270,7 @@ function showCalendarSummary(entries) {
 
     const latestEntry = entries[entries.length - 1];
 
-    /*
-        Häufigsten Mood berechnen.
-    */
+    //Häufigsten Mood berechnen.
     const monthMoodCount = {};
 
     entries.forEach(function (entry) {
@@ -293,9 +286,7 @@ function showCalendarSummary(entries) {
     const mostUsedMoodAmount =
         monthMoodCount[mostUsedMoodInMonth];
 
-    /*
-        Durchschnittswerte berechnen.
-    */
+    // Durchschnittswerte berechnen.
     const averageEnergy = (
         entries.reduce(function (sum, entry) {
             return sum + Number(entry.energy);
@@ -374,9 +365,7 @@ function showCalendarSummary(entries) {
 // Kalender beim Laden der App anzeigen.
 showCalendarGrid();
 
-/*
-    Einen Monat zurück wechseln.
-*/
+//Einen Monat zurück wechseln.
 prevMonthButton.addEventListener(
     "click",
     function () {
@@ -391,9 +380,7 @@ prevMonthButton.addEventListener(
     }
 );
 
-/*
-    Einen Monat vor wechseln.
-*/
+// Einen Monat vor wechseln.
 nextMonthButton.addEventListener(
     "click",
     function () {

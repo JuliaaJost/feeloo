@@ -15,14 +15,13 @@ const acceptMoodButton =
     document.querySelector("#acceptMoodButton");
 
 /*
-    Adresse unseres Backends.
+    API-Endpunkt unseres Backends.
+    Das Frontend sendet hier das aufgenommene Kamerabild hin.
 */
 const aiBackendUrl =
     "/analyze-face";
 
-/*
-    Speichert den von der KI erkannten Mood.
-*/
+// Speichert den von der KI erkannten Mood.
 let aiSuggestedMood = "Gut";
 
 /*
@@ -72,9 +71,7 @@ async function startScanner() {
     }
 }
 
-/*
-    Scanner öffnen.
-*/
+// Scanner öffnen.
 openScannerButton.addEventListener(
     "click",
     function () {
@@ -82,9 +79,7 @@ openScannerButton.addEventListener(
     }
 );
 
-/*
-    Scanner schließen.
-*/
+// Scanner schließen.
 closeScannerButton.addEventListener(
     "click",
     function () {
@@ -118,10 +113,7 @@ acceptMoodButton.addEventListener(
     }
 );
 
-/*
-    Nimmt ein Bild
-    aus dem aktuellen Kamerastream auf.
-*/
+// Nimmt ein Bild aus dem aktuellen Kamerastream auf.
 function captureCurrentFrame() {
     const canvas =
         document.createElement("canvas");
@@ -142,8 +134,9 @@ function captureCurrentFrame() {
 }
 
 /*
-    Sendet das Kamerabild
-    an unser Backend.
+    Sendet das aufgenommene Bild
+    an das Backend und verarbeitet
+    die Antwort der KI.
 */
 async function analyzeMoodWithAI(imageData) {
     try {
