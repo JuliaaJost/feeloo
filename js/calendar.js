@@ -364,12 +364,6 @@ function showCalendarSummary(entries) {
     `;
 
     document
-        .querySelector(".calendar-summary-card")
-        .addEventListener("click", function () {
-            showDayDetail(latestEntry);
-        });
-
-    document
         .querySelector(".calendar-latest-card")
         .addEventListener("click", function () {
             showDayDetail(latestEntry);

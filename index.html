@@ -11,6 +11,14 @@
     <!-- Verknüpfung zum Manifest -->
     <link rel="manifest" href="manifest.webmanifest">
 
+    <!-- Google Fonts für die App laden
+     League Spartan = Überschriften
+     Montserrat = Fließtext, Buttons und Navigation -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@500;600;700&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+
     <!-- Verbindung zu unserer CSS-Datei -->
     <link rel="stylesheet" href="css/style.css">
     <link
@@ -98,7 +106,10 @@
 
         <!-- Energielevel -->
 
-        <label for="energy">Energielevel</label>
+        <label for="energy">
+            <i class="fa-solid fa-bolt"></i>
+            Energielevel
+        </label>
         <input
                 type="range"
                 id="energy"
@@ -107,7 +118,10 @@
                 value="5">
 
         <!-- Stresslevel -->
-        <label for="stress">Stresslevel</label>
+        <label for="stress">
+            <i class="fa-solid fa-brain"></i></i>
+            Stresslevel
+        </label>
         <input
                 type="range"
                 id="stress"
@@ -116,7 +130,10 @@
                 value="5">
 
         <!-- Schlafqualität -->
-        <label for="sleep">Schlafqualität</label>
+        <label for="sleep">
+            <i class="fa-solid fa-moon"></i>
+            Schlafqualität
+        </label>
         <input
                 type="range"
                 id="sleep"
@@ -182,7 +199,7 @@
 
     <button class="nav-button active" data-page="today">
         <i class="fa-regular fa-face-smile"></i>
-        <span>Today</span>
+        <span>Heute</span>
     </button>
 
     <button class="nav-button" data-page="calendar">
@@ -260,9 +277,14 @@
     </div>
 </section>
 
-<script src="js/demoData.js"></script>
-
-<!-- Verbindung zu unserer JavaScript-Datei -->
+<!-- Verbindung zu unsereren JavaScript-Dateien -->
+<script src="js/mood.js"></script>
+<script src="js/navigation.js"></script>
+<script src="js/tips.js"></script>
+<script src="js/statistics.js"></script>
+<script src="js/calendar.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/scanner.js"></script>
 <script src="js/app.js"></script>
 </body>
 </html>

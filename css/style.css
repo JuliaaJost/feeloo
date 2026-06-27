@@ -4,23 +4,51 @@
     box-sizing: border-box;
 }
 
-/* Gesamte Seite */
+/* ....Design Variablen.... */
+:root {
+    --accent-color: #7FCB8A;
+}
+
+/* ....Gesamte Seite.... */
 body {
-    font-family: Arial, sans-serif;
     background-color: #f7f8fa;
     color: #333;
     min-height: 100vh;
+    font-family: "Montserrat", sans-serif;
 }
 
-/* Hauptcontainer */
+/* ....Hauptcontainer.... */
 .app {
     max-width: 500px;
     margin: auto;
-    padding: 20px;
+    padding: 20px 20px 100px;
 }
 
+/* ....Allgemeine Seiten.... */
+.page {
+    max-width: 600px;
+    margin: 0 auto;
+}
 
-/* ....Header..... */
+.hidden {
+    display: none;
+}
+
+.page-title {
+    text-align: center;
+    font-family: "League Spartan", sans-serif;
+    font-size: 32px;
+    font-weight: 700;
+    margin-top: 30px;
+}
+
+.page-text {
+    text-align: center;
+    color: #666;
+    margin-bottom: 25px;
+}
+
+/* ....Header.... */
 .app-header {
     text-align: center;
     margin-top: 30px;
@@ -33,6 +61,8 @@ body {
 }
 
 h1 {
+    font-family: "League Spartan", sans-serif;
+    font-weight: 700;
     font-size: 32px;
     margin-bottom: 10px;
 }
@@ -40,7 +70,6 @@ h1 {
 .subtitle {
     color: #777;
 }
-
 
 /* ....Aktueller Mood.... */
 .selected-mood-section {
@@ -65,7 +94,6 @@ h1 {
     color: #666;
 }
 
-
 /* ....Mood Auswahl.... */
 .mood-selection {
     display: flex;
@@ -76,12 +104,12 @@ h1 {
 }
 
 .mood-button {
+    width: 100px;
+    padding: 10px;
     background: white;
     border: none;
     border-radius: 20px;
-    padding: 10px;
     cursor: pointer;
-    width: 100px;
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
 
@@ -98,12 +126,11 @@ h1 {
     margin-top: 8px;
 }
 
-/* Aktiver Mood */
 .mood-button.active {
-    border: 3px solid #89d17e;
+    border: 3px solid var(--accent-color);
 }
 
-/* Hintergrundfarben je nach ausgewähltem Mood */
+/* ....Mood Hintergrundfarben.... */
 body.mood-angry {
     background-color: #ffe1e1;
 }
@@ -133,7 +160,6 @@ body.mood-anxious {
 }
 
 /* ....Zusatzinformationen.... */
-
 .details-section {
     margin-top: 40px;
     background: white;
@@ -152,10 +178,6 @@ body.mood-anxious {
     margin-bottom: 5px;
 }
 
-.details-section input {
-    width: 100%;
-}
-
 .details-section textarea {
     width: 100%;
     min-height: 100px;
@@ -164,16 +186,73 @@ body.mood-anxious {
     resize: none;
 }
 
-#saveButton {
-    margin-top: 20px;
+/* ....Slider.... */
+.details-section input[type="range"] {
     width: 100%;
-    border: none;
-    border-radius: 15px;
-    padding: 12px;
-    background-color: #89d17e;
-    color: white;
-    font-size: 16px;
+    margin-top: 10px;
+    appearance: none;
+    -webkit-appearance: none;
+    height: 8px;
+    border-radius: 20px;
+    background: #e8ece8;
+    outline: none;
+}
+
+.details-section input[type="range"]::-webkit-slider-thumb {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--accent-color);
+    border: 3px solid white;
     cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,.20);
+    transition: .2s;
+}
+
+.details-section input[type="range"]::-webkit-slider-thumb:hover {
+    transform: scale(1.15);
+}
+
+.details-section input[type="range"]::-moz-range-thumb {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 3px solid white;
+    background: var(--accent-color);
+    cursor: pointer;
+}
+
+/* ....Buttons.... */
+#saveButton,
+.scan-button,
+#acceptMoodButton {
+    width: 100%;
+    margin-top: 20px;
+    padding: 16px;
+    border: none;
+    border-radius: 18px;
+    background: var(--accent-color);
+    color: white;
+    font-family: "Montserrat", sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 8px 18px rgba(0,0,0,.15);
+    transition: all 0.25s ease;
+}
+
+#saveButton:hover,
+.scan-button:hover,
+#acceptMoodButton:hover {
+    transform: translateY(-2px);
+}
+
+#saveButton:active,
+.scan-button:active,
+#acceptMoodButton:active {
+    transform: scale(0.98);
 }
 
 /* ....Navigation.... */
@@ -190,30 +269,8 @@ body.mood-anxious {
     padding: 12px;
     border-radius: 25px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    z-index: 100;
 }
-
-.nav-button {
-    border: none;
-    background: transparent;
-    font-size: 14px;
-    cursor: pointer;
-    color: #777;
-}
-
-.nav-button.active {
-    color: #4caf50;
-    font-weight: bold;
-}
-
-.app {
-    padding-bottom: 100px;
-}
-
-/*
----------------------------------------------------
-Navigation mit Icons
----------------------------------------------------
-*/
 
 .nav-button {
     display: flex;
@@ -221,82 +278,41 @@ Navigation mit Icons
     align-items: center;
     justify-content: center;
     gap: 4px;
-
-    background: transparent;
     border: none;
-
+    background: transparent;
     font-size: 12px;
+    cursor: pointer;
+    color: #777;
 }
 
 .nav-button i {
     font-size: 18px;
 }
 
-.nav-button.active i,
-.nav-button.active span {
-    color: #5db35d;
-}
-
 .nav-button.active {
     background: #eef8ea;
     border-radius: 16px;
     padding: 8px 14px;
+    font-weight: bold;
 }
 
-/* -------------------------
-   Seiten
-------------------------- */
-
-.page {
-    max-width: 600px;
-    margin: 0 auto;
+.nav-button.active i,
+.nav-button.active span {
+    color: var(--accent-color);
 }
 
-.hidden {
-    display: none;
-}
-
-/* ....Kalender.... */
-
-#calendarEntries {
-    max-width: 500px;
-    margin: 20px auto 100px auto;
-}
-
+/* ....Infos und Tipps.... */
+.tip-card,
 .calendar-entry {
     background: white;
-    padding: 15px;
-    margin-bottom: 10px;
-    border-radius: 15px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-}
-
-.tip-card {
-    background: white;
-    padding: 20px;
+    padding: 18px;
     border-radius: 20px;
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    margin-top: 20px;
-    max-width: 500px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.page-title {
-    text-align: center;
-    font-size: 32px;
-    margin-top: 30px;
-}
-
-.page-text {
-    text-align: center;
-    color: #666;
-    margin-bottom: 25px;
 }
 
 .mood-tips-list {
     max-width: 500px;
-    margin: 20px auto 100px auto;
+    margin: 20px auto 100px;
 }
 
 .mood-tip-item {
@@ -326,137 +342,10 @@ Navigation mit Icons
     color: #666;
 }
 
-/* ....Statistik.... */
-.stats-grid {
-    max-width: 520px;
-    margin: 25px auto 120px auto;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 14px;
-}
-
-.stat-card {
-    background: white;
-    padding: 18px;
-    border-radius: 22px;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
-    text-align: left;
-}
-
-.stat-card strong {
-    display: block;
-    font-size: 26px;
-    margin-bottom: 6px;
-}
-
-.stat-card p {
-    color: #666;
-}
-
-.stats-summary-card {
-    grid-column: 1 / -1;
-    background: white;
-    border-radius: 24px;
-    padding: 22px;
-    display: flex;
-    align-items: center;
-    gap: 18px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
-    border: 2px solid rgba(0,0,0,0.05);
-}
-
-.summary-emoji {
-    font-size: 64px;
-}
-
-.stats-summary-card h3 {
-    margin-bottom: 8px;
-}
-
-.stats-summary-card p {
-    color: #666;
-}
-
-.summary-mood-image {
-    width: 90px;
-    height: 90px;
-    border-radius: 50%;
-    object-fit: cover;
-}
-
-.small-stat-image {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    object-fit: cover;
-    vertical-align: middle;
-    margin-right: 6px;
-}
-
-#statsPage {
-    max-width: none;
-    width: 100%;
-    min-height: 100vh;
-    margin: 0;
-    padding: 40px 20px 120px;
-    background-color: #f7f8fa;
-}
-
-.distribution-card {
-    grid-column: 1 / -1;
-    background: white;
-    border-radius: 24px;
-    padding: 20px;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
-}
-
-.distribution-card h3 {
-    margin-bottom: 20px;
-}
-
-.distribution-row {
-    display: grid;
-    grid-template-columns: 90px 1fr 50px;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 12px;
-}
-
-.distribution-bar {
-    height: 12px;
-    background: #eeeeee;
-    border-radius: 10px;
-    overflow: hidden;
-}
-
-.distribution-fill {
-    height: 100%;
-    background: #89d17e;
-    border-radius: 10px;
-}
-
-/*... Wochen-Impulskarte ...*/
-.impulse-card {
-    grid-column: 1 / -1;
-    background: white;
-    border-radius: 24px;
-    padding: 20px;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
-}
-
-.impulse-card h3 {
-    margin-bottom: 10px;
-}
-
-.impulse-card p {
-    color: #555;
-    line-height: 1.5;
-}
-
-/* ....Tipp-Detailseite.... */
+/* ....Tipp Detailseite.... */
 .tip-detail {
     max-width: 500px;
-    margin: 25px auto 120px auto;
+    margin: 25px auto 120px;
     padding: 24px;
     border-radius: 30px;
     box-shadow: 0 8px 25px rgba(0,0,0,0.12);
@@ -477,7 +366,7 @@ Navigation mit Icons
     border-radius: 50%;
     object-fit: cover;
     display: block;
-    margin: 10px auto 20px auto;
+    margin: 10px auto 20px;
 }
 
 #tipDetailTitle {
@@ -498,12 +387,11 @@ Navigation mit Icons
     margin-top: 12px;
 }
 
-
-/* ....TagesMood-TippFokus.... */
+/* ....Tipp des Tages Fokus.... */
 .focused-tip {
     min-height: 170px;
     padding: 22px;
-    border: 3px solid rgba(80, 80, 80, 0.25);
+    border: 3px solid rgba(80,80,80,0.25);
     background: #f3ffe9;
     transform: scale(1.04);
     box-shadow: 0 10px 28px rgba(0,0,0,0.18);
@@ -532,13 +420,18 @@ Navigation mit Icons
     margin-bottom: 10px;
 }
 
-/* ...  Kalender ... */
+/* ....Kalender Übersicht.... */
+#calendarEntries {
+    max-width: 500px;
+    margin: 20px auto 100px;
+}
+
 .calendar-card {
+    max-width: 520px;
+    margin: 20px auto;
+    padding: 24px;
     background: white;
     border-radius: 28px;
-    padding: 24px;
-    margin: 20px auto;
-    max-width: 520px;
     box-shadow: 0 8px 24px rgba(0,0,0,0.10);
 }
 
@@ -551,18 +444,19 @@ Navigation mit Icons
 }
 
 .calendar-header h3 {
-    margin: 0;
     min-width: 140px;
+    margin: 0;
     text-align: center;
 }
 
-.month-button {
+.month-button,
+.calendar-back-button {
     width: 40px;
     height: 40px;
     border: none;
     border-radius: 50%;
-    background: #eef3ea;
-    color: #333;
+    background: #eef4e8;
+    color: #2f3b2f;
     font-size: 24px;
     font-weight: bold;
     cursor: pointer;
@@ -571,7 +465,7 @@ Navigation mit Icons
 .calendar-weekdays,
 .calendar-grid {
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
+    grid-template-columns: repeat(7, minmax(0, 1fr));
     gap: 12px;
     text-align: center;
 }
@@ -595,7 +489,7 @@ Navigation mit Icons
 }
 
 .calendar-day.today {
-    border: 3px solid #5db35d;
+    border: 3px solid var(--accent-color);
     transform: scale(1.08);
 }
 
@@ -604,18 +498,16 @@ Navigation mit Icons
     box-shadow: 0 5px 14px rgba(0,0,0,0.18);
 }
 
-/* Monatszusammenfassung */
-
+/* ....Kalender Monatszusammenfassung.... */
 .calendar-summary {
     max-width: 520px;
-    margin: 22px auto 14px auto;
+    margin: 22px auto 14px;
 }
 
 .calendar-summary-card {
     border-radius: 28px;
-    padding: 22px;
-    display: grid;
-    grid-template-columns: 95px 1fr;
+    padding: 24px;
+    display: flex;
     align-items: center;
     gap: 20px;
     box-shadow: 0 8px 24px rgba(0,0,0,0.12);
@@ -629,31 +521,44 @@ Navigation mit Icons
     object-fit: cover;
 }
 
+.calendar-summary-text {
+    flex: 1;
+}
+
 .summary-small-text {
     color: #666;
     font-size: 14px;
     margin-bottom: 5px;
 }
 
-.calendar-summary-card h3 {
-    font-size: 18px;
-    margin: 0;
+.calendar-summary-text h3 {
+    font-size: 16px;
+    margin-bottom: 4px;
 }
 
-.calendar-summary-card h2 {
+.calendar-summary-text h2 {
     font-size: 28px;
+    margin-bottom: 6px;
+}
+
+.calendar-summary-text p,
+.month-stats p,
+.calendar-latest-card p {
     margin: 4px 0;
 }
 
-.calendar-summary-card p {
-    margin: 4px 0;
+.month-stats {
+    margin-top: 12px;
 }
 
-/* Letzter Eintrag */
+.month-stats p {
+    font-size: 14px;
+}
 
+/* ....Letzter Kalendereintrag.... */
 .calendar-latest-entry {
     max-width: 520px;
-    margin: 14px auto 120px auto;
+    margin: 14px auto 120px;
 }
 
 .calendar-latest-card {
@@ -671,10 +576,6 @@ Navigation mit Icons
     flex: 1;
 }
 
-.calendar-latest-card p {
-    margin: 4px 0;
-}
-
 .calendar-latest-image {
     width: 70px;
     height: 70px;
@@ -682,11 +583,10 @@ Navigation mit Icons
     object-fit: cover;
 }
 
-/* Kalender Detailfenster */
-
+/* ....Kalender Detailansicht.... */
 .calendar-detail {
     max-width: 520px;
-    margin: 25px auto 120px auto;
+    margin: 25px auto 120px;
 }
 
 .calendar-detail-window {
@@ -700,18 +600,10 @@ Navigation mit Icons
 }
 
 .calendar-back-button {
-    width: 40px;
-    height: 40px;
-    border: none;
-    border-radius: 50%;
-    background: #eef4e8;
-    color: #2f3b2f;
-    font-size: 1.4rem;
-    font-weight: bold;
     display: flex;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
+    font-size: 1.4rem;
     transition: 0.2s;
 }
 
@@ -723,9 +615,9 @@ Navigation mit Icons
 .calendar-detail-big-image {
     width: 150px;
     height: 150px;
+    margin-bottom: 20px;
     border-radius: 50%;
     object-fit: cover;
-    margin-bottom: 20px;
 }
 
 .detail-mood-card,
@@ -757,48 +649,123 @@ Navigation mit Icons
 }
 
 .detail-impulse-card {
-    border-radius: 18px;
     padding: 16px;
     margin-top: 16px;
-
     box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
 
-.calendar-summary-card {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    padding: 24px;
+/* ....Statistik.... */
+#statsPage {
+    max-width: none;
+    width: 100%;
+    min-height: 100vh;
+    margin: 0;
+    padding: 40px 20px 120px;
+    background-color: #f7f8fa;
 }
 
-.calendar-summary-text {
-    flex: 1;
+.stats-grid {
+    max-width: 520px;
+    margin: 25px auto 120px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
 }
 
-.calendar-summary-text h3 {
-    font-size: 16px;
-    margin-bottom: 4px;
+.stat-card,
+.distribution-card,
+.impulse-card {
+    background: white;
+    border-radius: 24px;
+    padding: 20px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
 }
 
-.calendar-summary-text h2 {
-    font-size: 28px;
+.stat-card {
+    text-align: left;
+}
+
+.stat-card strong {
+    display: block;
+    font-size: 26px;
     margin-bottom: 6px;
 }
 
-.calendar-summary-text p {
-    margin: 3px 0;
+.stat-card p,
+.stats-summary-card p,
+.impulse-card p {
+    color: #666;
 }
 
-.month-stats {
-    margin-top: 12px;
+.stats-summary-card {
+    grid-column: 1 / -1;
+    background: white;
+    border-radius: 24px;
+    padding: 22px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    border: 2px solid rgba(0,0,0,0.05);
 }
 
-.month-stats p {
-    margin: 4px 0;
+.stats-summary-card h3 {
+    margin-bottom: 8px;
+}
+
+.summary-mood-image {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.small-stat-image {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+    vertical-align: middle;
+    margin-right: 6px;
+}
+
+.distribution-card,
+.impulse-card {
+    grid-column: 1 / -1;
+}
+
+.distribution-card h3,
+.impulse-card h3 {
+    margin-bottom: 16px;
+}
+
+.distribution-row {
+    display: grid;
+    grid-template-columns: 120px 1fr 45px;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.distribution-row span:first-child {
     font-size: 14px;
+    white-space: nowrap;
 }
 
-/* ...KI Scanner... */
+.distribution-bar {
+    height: 12px;
+    background: #eeeeee;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.distribution-fill {
+    height: 100%;
+    background: var(--accent-color);
+    border-radius: 10px;
+}
+
+/* ....KI Scanner.... */
 .ai-scan-section {
     background: white;
     border-radius: 24px;
@@ -808,22 +775,17 @@ Navigation mit Icons
 }
 
 .scan-button {
-    background: #89d17e;
-    color: white;
-    border: none;
-    border-radius: 18px;
+    width: auto;
     padding: 12px 20px;
-    cursor: pointer;
 }
 
 .scanner-modal {
     position: fixed;
     inset: 0;
     background: rgba(0,0,0,0.7);
-    display: flex;
-    justify-content: center;
-    align-items: center;
     z-index: 999;
+    overflow-y: auto;
+    padding: 30px 0;
 }
 
 .scanner-modal.hidden {
@@ -835,8 +797,7 @@ Navigation mit Icons
     background: white;
     width: 90%;
     max-width: 420px;
-    max-height: 90vh;
-    overflow-y: auto;
+    margin: 0 auto;
     border-radius: 30px;
     padding: 24px;
     text-align: center;
@@ -861,26 +822,6 @@ Navigation mit Icons
     cursor: pointer;
 }
 
-.scanner-modal {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.7);
-    z-index: 999;
-    overflow-y: auto;
-    padding: 30px 0;
-}
-
-.scanner-window {
-    position: relative;
-    background: white;
-    width: 90%;
-    max-width: 420px;
-    margin: 0 auto;
-    border-radius: 30px;
-    padding: 24px;
-    text-align: center;
-}
-
 .scanner-video-box {
     width: 100%;
     height: 320px;
@@ -901,7 +842,50 @@ Navigation mit Icons
     margin-bottom: 30px;
 }
 
-#acceptMoodButton {
-    margin-top: 15px;
-    width: 100%;
+/* ....Mobile Optimierung.... */
+@media (max-width: 480px) {
+
+    .calendar-card {
+        width: 100%;
+        max-width: 100%;
+        padding: 20px 12px;
+        overflow: hidden;
+    }
+
+    .calendar-header {
+        gap: 14px;
+        margin-bottom: 22px;
+    }
+
+    .calendar-header h3 {
+        min-width: auto;
+        font-size: 24px;
+    }
+
+    .calendar-weekdays,
+    .calendar-grid {
+        gap: 7px;
+    }
+
+    .calendar-day {
+        width: 36px;
+        height: 36px;
+        font-size: 14px;
+    }
+
+    .month-button {
+        width: 42px;
+        height: 42px;
+        flex-shrink: 0;
+    }
+
+    .scanner-window {
+        padding: 70px 20px 24px;
+    }
+
+    .scanner-title {
+        margin-top: 0;
+        font-size: 24px;
+        line-height: 1.2;
+    }
 }
