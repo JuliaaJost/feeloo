@@ -889,3 +889,12 @@ body.mood-anxious {
         line-height: 1.2;
     }
 }
+
+/* ....Skala unter den Slidern.... */
+.slider-scale {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 4px;
+    color: #888;
+    font-size: 12px;
+}
