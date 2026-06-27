@@ -1,9 +1,15 @@
 {
   "name": "Feeloo",
   "short_name": "Feeloo",
-  "start_url": ".",
+  "start_url": "index.html",
   "display": "standalone",
-  "background_color": "#f7f8fa",
-  "theme_color": "#89d17e",
-  "description": "Mood Tracker App für tägliches Wohlbefinden"
+  "background_color": "#F7F4ED",
+  "theme_color": "#DDEB7A",
+  "icons": [
+    {
+      "src": "images/App-Icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
 }
