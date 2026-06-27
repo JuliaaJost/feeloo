@@ -18,7 +18,7 @@ const acceptMoodButton =
     Adresse unseres Backends.
 */
 const aiBackendUrl =
-    "http://localhost:3000/analyze-face";
+    "/analyze-face";
 
 /*
     Speichert den von der KI erkannten Mood.
@@ -150,6 +150,8 @@ async function analyzeMoodWithAI(imageData) {
         scannerStatus.textContent =
             "KI analysiert dein Gesicht...";
 
+        console.log("Sende Bild an Backend:", aiBackendUrl);
+
         const response =
             await fetch(aiBackendUrl, {
                 method: "POST",
@@ -160,11 +162,15 @@ async function analyzeMoodWithAI(imageData) {
                     image: imageData
                 })
             });
+
         const result =
             await response.json();
-        if (result.error) {
+
+        console.log("Backend-Antwort:", result);
+
+        if (!response.ok || result.error) {
             scannerStatus.textContent =
-                "Analyse fehlgeschlagen.";
+                "Backend erreicht, aber Analyse fehlgeschlagen.";
             return;
         }
 
@@ -173,14 +179,12 @@ async function analyzeMoodWithAI(imageData) {
         scannerStatus.textContent =
             "Mood erkannt: " + result.mood;
         acceptMoodButton.classList.remove("hidden");
-        console.log(result);
     }
 
     catch (error) {
-
         scannerStatus.textContent =
             "Backend ist nicht erreichbar.";
 
-        console.log(error);
+        console.log("Fetch-Fehler:", error);
     }
 }

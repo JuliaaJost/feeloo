@@ -13,6 +13,7 @@ require("dotenv").config();
 
 const express = require("express");
 const cors = require("cors");
+const path = require("path");
 
 const {
     RekognitionClient,
@@ -20,12 +21,29 @@ const {
 } = require("@aws-sdk/client-rekognition");
 
 const app = express();
+app.use(function (request, response, next) {
+    console.log("Anfrage:", request.method, request.url);
+    next();
+});
+
 
 app.use(cors());
 
 app.use(express.json({
     limit: "10mb"
 }));
+
+// Liefert die Frontend-Dateien direkt über das Backend aus.
+// Dadurch können Handy und Computer dieselbe URL verwenden.
+app.use(express.static(path.join(__dirname, "..")));
+
+// Test-Endpunkt: Damit kann man prüfen, ob das Backend erreichbar ist.
+app.get("/health", function (request, response) {
+    response.json({
+        status: "ok",
+        message: "Feeloo Backend ist erreichbar."
+    });
+});
 
 const rekognitionClient = new RekognitionClient({
     region: process.env.AWS_REGION
