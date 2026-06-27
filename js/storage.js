@@ -43,6 +43,8 @@ saveButton.addEventListener("click", function () {
 
     // Alle Einträge wieder speichern
     localStorage.setItem("feelooEntries", JSON.stringify(entries));
+    localStorage.setItem("currentMood", currentMood);
+    showMoodTipCards();
     showCalendarEntries();
     showCalendarGrid();
     showStats();

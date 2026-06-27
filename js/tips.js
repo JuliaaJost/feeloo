@@ -6,10 +6,16 @@ function showMoodTipCards() {
 
     moodTipsList.innerHTML = "";
 
-    // Der aktuell ausgewählte Mood soll oben stehen.
+    /*
+        Der Tipp des Tages orientiert sich
+        am zuletzt gespeicherten Mood.
+    */
+    const savedMood =
+        localStorage.getItem("currentMood") || "Neutral";
+
     const sortedMoods = Object.keys(moodTips).sort(function (a, b) {
-        if (a === currentMood) return -1;
-        if (b === currentMood) return 1;
+        if (a === savedMood) return -1;
+        if (b === savedMood) return 1;
         return 0;
     });
 
@@ -17,10 +23,12 @@ function showMoodTipCards() {
 
         const card = document.createElement("div");
         card.classList.add("mood-tip-item");
-        const title = mood === currentMood
+
+        const title = mood === savedMood
             ? "Tipp des Tages"
             : "Wenn du " + mood.toLowerCase() + " bist";
-        if (mood === currentMood) {
+
+        if (mood === savedMood) {
             card.classList.add("focused-tip");
             card.style.backgroundColor = moodCardColors[mood];
         }
@@ -30,14 +38,14 @@ function showMoodTipCards() {
             <div>
                 <h4>${title}</h4>
                 ${
-            mood === currentMood
+            mood === savedMood
                 ? `<p class="current-mood-label">${mood}</p>`
                 : ""
         }
                 <p>${moodTips[mood]}</p>
             </div>
         `;
-// Öffnet die Detailseite des ausgewählten Moods.
+
         card.addEventListener("click", function () {
             showTipDetail(mood);
         });

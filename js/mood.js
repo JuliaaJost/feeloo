@@ -128,7 +128,6 @@ function selectMood(button) {
     // Erklärungstext und Tipptext ändern
     selectedMoodText.textContent = moodTexts[mood];
     currentMood = mood;
-    showMoodTipCards();
 
     // Großes Bild ändern
     selectedMoodImage.src = "images/" + mood + ".png";
