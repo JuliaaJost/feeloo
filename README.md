@@ -1,16 +1,19 @@
 # Feeloo
 
 **LV Mobile Web Apps – Sommersemester 2026**
+**Chiara Brandstetter, Julia Jost**
 
 ## Projektbeschreibung
 
-Feeloo ist eine Progressive Web App (PWA), mit der Benutzer:innen ihre tägliche Stimmung festhalten können. Der aktuelle Mood kann entweder manuell ausgewählt oder mithilfe einer KI über die Smartphone-Kamera erkannt werden. Zusätzlich können Informationen wie Energielevel, Stresslevel, Schlafqualität und persönliche Notizen gespeichert werden.
+Feeloo ist eine Progressive Web App (PWA), mit der Nutzer:innen ihre tägliche Stimmung festhalten können. Der aktuelle Mood kann entweder manuell über Mood-Balls ausgewählt oder mithilfe eines KI-Scans über die Kamera erkannt werden.
 
-Für die automatische Stimmungserkennung wird Amazon AWS Rekognition verwendet. Die Kommunikation mit AWS erfolgt über ein lokales Backend, damit die Zugangsdaten nicht im Frontend gespeichert werden müssen.
+Zusätzlich können Informationen wie Energielevel, Stresslevel, Schlafqualität und persönliche Notizen gespeichert werden. Die gespeicherten Daten werden anschließend im Kalender, in der Statistik und im Bereich „Infos & Tipps“ wiederverwendet.
+
+Für die KI-gestützte Stimmungserkennung wird Amazon AWS Rekognition verwendet. Die Kommunikation mit AWS erfolgt über ein lokales Node.js-Backend, damit sensible Zugangsdaten nicht im Frontend gespeichert werden müssen.
 
 ---
 
-# Projektstruktur
+## Projektstruktur
 
 ```text
 Feeloo/
@@ -54,40 +57,75 @@ Feeloo/
 
 ---
 
-# Aufbau der Anwendung
+## Aufbau der Anwendung
 
 Die Anwendung ist in mehrere JavaScript-Dateien aufgeteilt. Dadurch bleibt der Code übersichtlich und die einzelnen Funktionen sind klar voneinander getrennt.
 
-| Datei             | Beschreibung                                                              |
-| ----------------- | ------------------------------------------------------------------------- |
-| **app.js**        | Registriert den Service Worker und initialisiert die PWA.                 |
-| **mood.js**       | Verwaltet die Mood-Auswahl, Texte, Farben und Mood-Bilder.                |
-| **navigation.js** | Steuert die Navigation zwischen den einzelnen Bereichen der App.          |
-| **calendar.js**   | Erstellt den Kalender und zeigt gespeicherte Mood-Einträge an.            |
-| **tips.js**       | Zeigt stimmungsabhängige Tipps und Detailinformationen an.                |
-| **statistics.js** | Berechnet Statistiken aus den gespeicherten Mood-Einträgen.               |
-| **storage.js**    | Speichert und lädt alle Daten über den Local Storage.                     |
-| **scanner.js**    | Steuert den KI-Scanner, die Kamera und die Kommunikation mit dem Backend. |
-| **sw.js**         | Service Worker der Progressive Web App.                                   |
+| Datei             | Beschreibung                                                                  |
+| ----------------- | ----------------------------------------------------------------------------- |
+| **app.js**        | Registriert den Service Worker und bereitet die App als PWA vor.              |
+| **mood.js**       | Verwaltet Mood-Auswahl, Mood-Texte, Farben, Bilder und Tipps.                 |
+| **navigation.js** | Steuert die Navigation zwischen Heute, Kalender, Infos & Tipps und Statistik. |
+| **calendar.js**   | Erstellt die Kalenderansicht und zeigt gespeicherte Mood-Einträge pro Tag an. |
+| **tips.js**       | Erstellt stimmungsabhängige Tipp-Karten und Detailansichten.                  |
+| **statistics.js** | Berechnet Statistiken aus den gespeicherten Mood-Einträgen.                   |
+| **storage.js**    | Speichert Mood-Einträge im LocalStorage des Browsers.                         |
+| **scanner.js**    | Steuert Kamera, KI-Scanner und Kommunikation mit dem Backend.                 |
+| **sw.js**         | Service Worker für Caching und PWA-Funktionalität.                            |
 
 ---
 
-# Backend
+## Frontend
 
-Das Backend befindet sich im Ordner backend.
+Das Frontend besteht aus HTML, CSS und JavaScript. Die Datei `index.html` bildet die Grundlage der Anwendung und enthält die verschiedenen Bereiche wie „Heute“, „Kalender“, „Infos & Tipps“ sowie „Statistik“.
+
+Das Styling der Anwendung befindet sich in `css/style.css`. Dort werden unter anderem Farben, Schriftarten, Navigation, Mood-Balls, Karten, Kalender und der KI-Scanner gestaltet.
+
+Feeloo wurde als Single-Page-Anwendung umgesetzt. Alle Bereiche befinden sich innerhalb derselben HTML-Datei und werden mithilfe von JavaScript ein- bzw. ausgeblendet. Dadurch ist kein Seitenwechsel erforderlich und die Bedienung ähnelt einer nativen App.
+
+---
+
+## Speicherung der Daten
+
+Die Mood-Einträge werden lokal im Browser gespeichert. Dafür wird `localStorage` verwendet.
+
+Gespeichert werden:
+
+* Datum
+* ausgewählter Mood
+* Energielevel
+* Stresslevel
+* Schlafqualität
+* persönliche Notiz
+
+Die gespeicherten Einträge werden danach in mehreren Bereichen verwendet:
+
+* im Kalender für die Tagesansicht
+* in der Statistik für Durchschnittswerte und Mood-Verteilung
+* im Bereich Infos & Tipps für den passenden Tipp des Tages
+
+---
+## Backend
+
+Das Backend befindet sich im Ordner `backend`.
 
 Es wurde mit Node.js und Express umgesetzt und übernimmt folgende Aufgaben:
 
-* Bereitstellung der Frontend-Dateien
-* Entgegennahme des Kamerabildes
-* Kommunikation mit Amazon AWS Rekognition
-* Rückgabe der erkannten Stimmung an das Frontend
+- Bereitstellung der Frontend-Dateien
+- Entgegennahme des Kamerabildes
+- Kommunikation mit Amazon AWS Rekognition
+- Zuordnung der erkannten Emotion zu einem Feeloo-Mood
+- Rückgabe der erkannten Stimmung an das Frontend
 
-Die AWS-Zugangsdaten werden über eine lokale `.env` Datei geladen und befinden sich nicht im öffentlichen Repository.
+Das Backend dient gleichzeitig als Schnittstelle zwischen Frontend und Amazon AWS Rekognition. Dadurch verbleiben die AWS-Zugangsdaten ausschließlich im Backend und müssen nicht im Frontend gespeichert werden.
+
+Die Zugangsdaten werden über eine lokale `.env`-Datei geladen. Diese Datei wird aus Sicherheitsgründen nicht in das öffentliche Git-Repository hochgeladen.
 
 ---
 
-# Anwendung starten
+Die benötigten Pakete stehen in der Datei `package.json`.
+
+---
 
 ## Backend starten
 
@@ -97,7 +135,7 @@ Im ersten Terminal in den Backend-Ordner wechseln:
 cd backend
 ```
 
-Anschließend den Server starten:
+Danach den Server starten:
 
 ```powershell
 node server.js
@@ -109,13 +147,15 @@ Nach erfolgreichem Start erscheint folgende Ausgabe:
 Feeloo Backend läuft auf Port 3000
 ```
 
+Das Backend läuft dann lokal auf Port 3000.
+
 ---
 
 ## LocalTunnel starten
 
 Damit das lokal laufende Backend auch vom Smartphone erreichbar ist, wird LocalTunnel verwendet.
 
-Dafür ein zweites Terminal öffnen und folgenden Befehl ausführen:
+Dafür wird ein zweites Terminal geöffnet und folgender Befehl ausgeführt:
 
 ```powershell
 npx localtunnel --port 3000
@@ -129,52 +169,145 @@ Danach wird eine öffentliche HTTPS-Adresse erzeugt, zum Beispiel:
 https://deep-coats-yawn.loca.lt
 ```
 
-Da diese Adresse bei jedem Neustart neu erstellt wird, muss sie gegebenenfalls angepasst werden.
+Diese Adresse ist nur ein Beispiel. LocalTunnel erzeugt bei jedem Start eine neue URL.
 
 ---
 
-# App öffnen
+## App öffnen
 
-Es gibt zwei Möglichkeiten, die Anwendung zu starten.
+Feeloo kann auf unterschiedliche Arten verwendet werden. Welche Variante genutzt wird, hängt davon ab, ob die KI-Funktion verwendet werden soll und ob die App am Laptop oder Smartphone geöffnet wird.
 
-## Server-Version
+---
 
-Die Web-App ist über den MAD-Server erreichbar:
+### Variante 1 – Laptop ohne KI
+
+Die App wird direkt über die MAD-Adresse geöffnet:
 
 ```text
 https://mad.kwmhgb.at/brandstetter/feeloo/index.html
 ```
 
-Diese Version eignet sich zum Verwenden der App ohne lokal gestartetes Backend.
+Für diese Variante wird kein Backend benötigt.
 
-## KI-Version
+Folgende Funktionen funktionieren ohne Backend:
 
-Für die Nutzung der KI-Funktion wird die durch LocalTunnel erzeugte URL verwendet.
+* Mood auswählen
+* Mood speichern
+* Kalender verwenden
+* Tipps anzeigen
+* Statistik anzeigen
+* App als PWA testen
 
-Beispiel:
+---
+
+### Variante 2 – Laptop mit KI
+
+Die App wird über die MAD-Adresse geöffnet:
+
+```text
+https://mad.kwmhgb.at/brandstetter/feeloo/index.html
+```
+
+Zusätzlich muss das Backend lokal gestartet werden:
+
+```powershell
+cd backend
+node server.js
+```
+
+Das Backend läuft anschließend auf:
+
+```text
+http://localhost:3000
+```
+
+Dadurch kann die KI-Funktion am Laptop verwendet werden, solange das Backend aktiv ist.
+
+---
+
+### Variante 3 – Smartphone ohne KI
+
+Die App kann am Smartphone direkt über die MAD-Adresse geöffnet werden:
+
+```text
+https://mad.kwmhgb.at/brandstetter/feeloo/index.html
+```
+
+Für diese Variante werden weder Backend noch LocalTunnel benötigt.
+
+Die App kann am Smartphone außerdem auf dem Homescreen gespeichert werden und wirkt dadurch wie eine installierte App.
+
+---
+
+### Variante 4 – Smartphone mit KI
+
+Für die KI-Funktion am Smartphone muss zuerst am Laptop das Backend gestartet werden:
+
+```powershell
+cd backend
+node server.js
+```
+
+Danach wird in einem zweiten Terminal LocalTunnel gestartet:
+
+```powershell
+npx localtunnel --port 3000
+```
+
+LocalTunnel erzeugt danach eine öffentliche HTTPS-Adresse, zum Beispiel:
 
 ```text
 https://deep-coats-yawn.loca.lt
 ```
 
-Über diese Adresse werden sowohl das Frontend als auch das lokale Backend bereitgestellt. Dadurch kann die Kameraaufnahme direkt an das Backend gesendet und anschließend von Amazon AWS Rekognition analysiert werden.
+Diese LocalTunnel-Adresse wird anschließend am Smartphone geöffnet.
+
+Der Grund dafür ist, dass ein Smartphone nicht direkt auf `localhost:3000` des Laptops zugreifen kann. `localhost` meint immer das jeweilige Gerät selbst. Am Smartphone würde `localhost` also auf das Smartphone zeigen und nicht auf den Laptop.
+
+Durch LocalTunnel werden die Anfragen vom Smartphone an das lokal laufende Backend am Laptop weitergeleitet. Dadurch kann die Kameraaufnahme an das Backend gesendet, von Amazon AWS Rekognition analysiert und wieder an die App zurückgegeben werden.
 
 ---
 
-# Ablauf der KI-Funktion
+## Ablauf der KI-Funktion
 
 Der KI-Scan läuft in folgenden Schritten ab:
 
-1. Die Kamera des Smartphones wird geöffnet.
-2. Nach wenigen Sekunden wird automatisch ein Bild aufgenommen.
-3. Das Bild wird an das lokale Backend gesendet.
-4. Das Backend übermittelt das Bild an Amazon AWS Rekognition.
-5. Die erkannte Emotion wird einem Feeloo-Mood zugeordnet.
-6. Der vorgeschlagene Mood kann anschließend übernommen werden.
+1. Die Nutzerin oder der Nutzer startet den Mood-Scan.
+2. Die Kamera wird geöffnet.
+3. Nach wenigen Sekunden wird automatisch ein Bild aufgenommen.
+4. Das Bild wird an das Backend gesendet.
+5. Das Backend sendet das Bild an Amazon AWS Rekognition.
+6. AWS Rekognition erkennt eine Emotion.
+7. Die erkannte Emotion wird einem Feeloo-Mood zugeordnet.
+8. Die App zeigt den vorgeschlagenen Mood an.
+9. Der Vorschlag kann übernommen oder manuell geändert werden.
+
+Die KI ersetzt also nicht die eigene Einschätzung, sondern unterstützt nur bei der Mood-Auswahl.
 
 ---
 
-# Progressive Web App
+## Zuordnung der Emotionen
+
+AWS Rekognition gibt Emotionen wie `HAPPY`, `SAD`, `ANGRY`, `FEAR`, `CALM` oder `SURPRISED` zurück.
+
+Diese Emotionen werden im Backend den Feeloo-Moods zugeordnet.
+
+Beispiele:
+
+| AWS Emotion | Feeloo Mood  |
+| ----------- | ------------ |
+| HAPPY       | Hervorragend |
+| SAD         | Traurig      |
+| ANGRY       | Wütend       |
+| FEAR        | Ängstlich    |
+| CALM        | Neutral      |
+| SURPRISED   | Gut          |
+
+Falls keine passende Emotion erkannt wird, wird standardmäßig `Neutral` verwendet.
+
+---
+
+## Progressive Web App
 
 Feeloo wurde als Progressive Web App umgesetzt.
 
@@ -185,12 +318,21 @@ Folgende Bestandteile wurden implementiert:
 * eigenes App-Icon
 * Standalone-Modus
 * responsives Layout
+* Speicherung auf dem Homescreen
 
-Dadurch kann die Anwendung direkt auf dem Smartphone installiert und wie eine native App verwendet werden.
+Im Manifest sind unter anderem App-Name, Start-URL, Farben, Darstellungsmodus und App-Icon definiert.
+
+Durch den Eintrag
+
+```json
+"display": "standalone"
+```
+
+kann die App nach dem Speichern auf dem Homescreen wie eine eigenständige App wirken.
 
 ---
 
-# Verwendete Technologien
+## Verwendete Technologien
 
 ### Frontend
 
@@ -203,27 +345,66 @@ Dadurch kann die Anwendung direkt auf dem Smartphone installiert und wie eine na
 * Node.js
 * Express
 
-### Weitere Technologien
+### Externe Dienste und APIs
 
 * Amazon AWS Rekognition
 * LocalTunnel
-* Local Storage
+* Font Awesome
+* Google Fonts
+
+### Browser-Funktionen
+
+* LocalStorage
 * MediaDevices API
 * Service Worker
 * Web App Manifest
 
 ---
 
-# Hinweise
+## Sicherheit
 
-Die Datei `.env` enthält die AWS-Zugangsdaten und wird aus Sicherheitsgründen nicht in das öffentliche Git-Repository hochgeladen.
+Die AWS-Zugangsdaten werden nicht im Frontend gespeichert.
 
-Damit die KI-Funktion funktioniert, müssen das Backend und LocalTunnel während der Nutzung aktiv sein.
+Sie befinden sich lokal in der Datei:
+
+```text
+backend/.env
+```
+
+Diese Datei darf nicht in das öffentliche Git-Repository hochgeladen werden.
+
+In der `.gitignore` sollten daher unter anderem folgende Einträge vorhanden sein:
+
+```text
+backend/.env
+backend/node_modules/
+.idea/
+```
 
 ---
 
-# GitHub
+## Hinweise zur Nutzung
+
+Die normale App funktioniert ohne Backend.
+
+Für die KI-Funktion muss das Backend aktiv sein.
+
+Für die KI-Funktion am Smartphone muss zusätzlich LocalTunnel aktiv sein.
+
+Sobald Backend oder LocalTunnel geschlossen werden, funktionieren Mood-Auswahl, Kalender, Tipps und Statistik weiterhin. Nur die KI-Analyse ist dann nicht verfügbar.
+
+Für eine dauerhafte Produktivversion müsste das Backend auf einem dauerhaft erreichbaren Server oder Cloud-Dienst gehostet werden. Dann wäre keine wechselnde LocalTunnel-Adresse mehr notwendig.
+
+---
+
+## GitHub
 
 Das Projekt wurde gemeinsam über GitHub entwickelt und versioniert.
+
+Repository:
+
+```text
+https://github.com/JuliaaJost/feeloo
+```
 
 Während der Entwicklung wurden Änderungen regelmäßig synchronisiert, getestet und dokumentiert.
