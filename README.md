@@ -324,7 +324,7 @@ Im Manifest sind unter anderem App-Name, Start-URL, Farben, Darstellungsmodus un
 
 Durch den Eintrag
 
-```json
+```text
 "display": "standalone"
 ```
 
