@@ -13,6 +13,7 @@ function showStats() {
 
     const totalEntries = entries.length;
 
+    //Durchschnitt berechnen
     const averageEnergy = (
         entries.reduce(function (sum, entry) {
             return sum + Number(entry.energy);

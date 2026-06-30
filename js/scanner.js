@@ -51,6 +51,7 @@ async function startScanner() {
         "Kamera wird gestartet...";
     acceptMoodButton.classList.add("hidden");
     try {
+        //Kamerazugriff?
         const stream =
             await navigator.mediaDevices.getUserMedia({
                 video: true

@@ -6,7 +6,7 @@
     Internet teilweise funktioniert.
 */
 
-const CACHE_NAME = "feeloo-v1";
+const CACHE_NAME = "feeloo-v2";
 
 // Dateien, die für die Offline-Nutzung im Cache gespeichert werden.
 const FILES_TO_CACHE = [
@@ -14,7 +14,18 @@ const FILES_TO_CACHE = [
     "/index.html",
     "/css/style.css",
     "/js/app.js",
-    "/manifest.webmanifest"
+    "/js/calendar.js",
+    "/js/mood.js",
+    "/manifest.webmanifest",
+
+    "/images/App-Icon.png",
+    "/images/Gut.png",
+    "/images/Hervorragend.png",
+    "/images/Müde.png",
+    "/images/Neutral.png",
+    "/images/Traurig.png",
+    "/images/Wütend.png",
+    "/images/Ängstlich.png"
 ];
 
 // Beim Installieren speichern wir die Dateien
